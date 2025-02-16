@@ -1,18 +1,22 @@
+import { NewChatButton, ToggleButton } from '@/components/buttons';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarHeader,
-} from "@/components/ui/sidebar";
-
+} from '@/components/ui/sidebar';
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarHeader />
+    <Sidebar variant="floating">
+      <SidebarHeader>
+        <div className="flex w-full justify-between">
+          <ToggleButton />
+          <NewChatButton />
+        </div>
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+        <SidebarGroup>233</SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>

@@ -28,11 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex h-full w-full bg-green-500 antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} flex h-full w-full antialiased`}
       >
-        <SidebarProvider>
+        <SidebarProvider defaultOpen={false}>
           <AppSidebar />
-          <main className="flex h-full w-full flex-col">
+          <main className="flex h-full w-full flex-col p-2">
             <Navbar />
             {children}
           </main>

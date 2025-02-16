@@ -1,109 +1,98 @@
 'use client';
-import { useSidebar } from '@/components/ui/sidebar';
+import { useState } from 'react';
 
+import { Input } from '@/components/ui/input';
+import { useSidebar } from '@/components/ui/sidebar';
 const Navbar = () => {
+  const { open } = useSidebar();
   return (
-    <div className="flex h-[5vh] w-full items-center">
-      {/* <SidebarTrigger /> */}
-      <ToggleButton />
-      <NewButton />
-      <ShareButton />
-      <UserButton />
-      <NoUserButton />
-      <button>sth else</button>
+    <div className="relative flex h-[5vh] w-full items-center justify-between">
+      <div className="inline-flex gap-2">
+        {open ? null : (
+          <>
+            <ToggleButton />
+            <NewChatButton />
+          </>
+        )}
+        <ModelSelector />
+      </div>
+      <div className="absolute left-1/2 -translate-x-1/2">
+        <ChatTitle />
+      </div>
+      <div className="inline-flex">
+        <ShareButton />
+        <UserButton />
+        <NoUserButton />
+      </div>
     </div>
   );
 };
 export default Navbar;
+const ChatTitle = () => {
+  const [title, setTitle] = useState('');
 
-const NewButton = () => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.currentTarget.blur();
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
   return (
-    <button className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        className="h-full w-full"
-        fill="#FFFFFF"
-      >
-        <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
-      </svg>
-    </button>
+    <Input
+      placeholder="未命名对话"
+      value={title}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+      className="border-none"
+    />
   );
 };
 
-const ToggleButton = () => {
-  const { toggleSidebar } = useSidebar();
+import {
+  NewChatButton,
+  NoUserButton,
+  ShareButton,
+  ToggleButton,
+  UserButton,
+} from '@/components/buttons';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-  return (
-    <button
-      className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30"
-      onClick={() => {
-        toggleSidebar();
-      }}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        className="h-full w-full"
-        fill="#FFFFFF"
-      >
-        <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm240-80h400v-480H400v480Zm-80 0v-480H160v480h160Zm-160 0v-480 480Zm160 0h80-80Zm0-480h80-80Z" />
-      </svg>
-    </button>
-  );
+type ModelEntry = {
+  id: string;
+  name: string;
 };
-
-const ShareButton = () => {
+const ModelSelector = () => {
+  const models: ModelEntry[] = [
+    { id: '1', name: '模型 1' },
+    { id: '2', name: '模型 2' },
+    { id: '3', name: '模型 3' },
+  ];
   return (
-    <button className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        className="h-full w-full"
-        fill="#FFFFFF"
-      >
-        <path d="M680-80q-50 0-85-35t-35-85q0-6 3-28L282-392q-16 15-37 23.5t-45 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q24 0 45 8.5t37 23.5l281-164q-2-7-2.5-13.5T560-760q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-24 0-45-8.5T598-672L317-508q2 7 2.5 13.5t.5 14.5q0 8-.5 14.5T317-452l281 164q16-15 37-23.5t45-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T720-200q0-17-11.5-28.5T680-240q-17 0-28.5 11.5T640-200q0 17 11.5 28.5T680-160ZM200-440q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm480-280q17 0 28.5-11.5T720-760q0-17-11.5-28.5T680-800q-17 0-28.5 11.5T640-760q0 17 11.5 28.5T680-720Zm0 520ZM200-480Zm480-280Z" />
-      </svg>
-    </button>
-  );
-};
-
-const UserButton = () => {
-  return (
-    <button className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        className="h-full w-full"
-        fill="#FFFFFF"
-      >
-        <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
-      </svg>
-    </button>
-  );
-};
-
-const NoUserButton = () => {
-  return (
-    <button className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        className="h-full w-full"
-        fill="#FFFFFF"
-      >
-        <path d="M608-522 422-708q14-6 28.5-9t29.5-3q59 0 99.5 40.5T620-580q0 15-3 29.5t-9 28.5ZM234-276q51-39 114-61.5T480-360q18 0 34.5 1.5T549-354l-88-88q-47-6-80.5-39.5T341-562L227-676q-32 41-49.5 90.5T160-480q0 59 19.5 111t54.5 93Zm498-8q32-41 50-90.5T800-480q0-133-93.5-226.5T480-800q-56 0-105.5 18T284-732l448 448ZM480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q83 0 155.5 31.5t127 86q54.5 54.5 86 127T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-60Z" />
-      </svg>
-    </button>
+    <Select>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="模型1" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {models.map(model => (
+            <SelectItem value={model.name} key={model.id}>
+              {model.name}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 };
