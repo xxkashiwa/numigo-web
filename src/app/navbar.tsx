@@ -81,7 +81,7 @@ const ModelSelector = () => {
   ];
   return (
     <Select>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[120px] border-none focus:ring-0 focus:ring-offset-0">
         <SelectValue placeholder="模型1" />
       </SelectTrigger>
       <SelectContent>

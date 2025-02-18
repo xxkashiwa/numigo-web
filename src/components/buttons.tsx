@@ -2,7 +2,7 @@
 import { useSidebar } from '@/components/ui/sidebar';
 const NewChatButton = () => {
   return (
-    <button className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
+    <button className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
@@ -21,7 +21,7 @@ const ToggleButton = () => {
 
   return (
     <button
-      className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30"
+      className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30"
       onClick={() => {
         toggleSidebar();
       }}
@@ -33,7 +33,7 @@ const ToggleButton = () => {
         width="24px"
         className="h-full w-full"
       >
-        <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm240-80h400v-480H400v480Zm-80 0v-480H160v480h160Zm-160 0v-480 480Zm160 0h80-80Zm0-480h80-80Z" />
+        <path d="M186.01-96.75q-37.58 0-63.42-25.84-25.84-25.84-25.84-63.42v-587.98q0-37.64 25.84-63.53t63.42-25.89h587.98q37.64 0 63.53 25.89t25.89 63.53v587.98q0 37.58-25.89 63.42-25.89 25.84-63.53 25.84H186.01Zm134.02-89.26v-587.98H186.01v587.98h134.02Zm89.42 0h364.54v-587.98H409.45v587.98Zm-89.42 0H186.01h134.02Z" />
       </svg>
     </button>
   );
@@ -41,7 +41,7 @@ const ToggleButton = () => {
 
 const ShareButton = () => {
   return (
-    <button className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
+    <button className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
@@ -57,7 +57,7 @@ const ShareButton = () => {
 
 const UserButton = () => {
   return (
-    <button className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
+    <button className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
@@ -73,7 +73,7 @@ const UserButton = () => {
 
 const NoUserButton = () => {
   return (
-    <button className="h-full w-10 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
+    <button className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
