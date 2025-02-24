@@ -5,8 +5,9 @@ import { Input } from '@/components/ui/input';
 import { useSidebar } from '@/components/ui/sidebar';
 const Navbar = () => {
   const { open } = useSidebar();
+  const isLogged = true;
   return (
-    <div className="relative flex h-[5vh] w-full items-center justify-between">
+    <div className="relative flex h-[3vh] w-full items-center justify-between">
       <div className="inline-flex gap-2">
         {open ? null : (
           <>
@@ -21,8 +22,7 @@ const Navbar = () => {
       </div>
       <div className="inline-flex">
         <ShareButton />
-        <UserButton />
-        <NoUserButton />
+        {isLogged ? <UserButton /> : <NoUserButton />}
       </div>
     </div>
   );
