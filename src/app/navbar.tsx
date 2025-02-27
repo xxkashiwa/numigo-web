@@ -1,11 +1,10 @@
 'use client';
 import { useState } from 'react';
 
-import { Input } from '@/components/ui/input';
 import { useSidebar } from '@/components/ui/sidebar';
 const Navbar = () => {
   const { open } = useSidebar();
-  const isLogged = true;
+  const isLogged = false;
   return (
     <div className="relative flex h-[3vh] w-full items-center justify-between">
       <div className="inline-flex gap-2">
@@ -22,12 +21,13 @@ const Navbar = () => {
       </div>
       <div className="inline-flex">
         <ShareButton />
-        {isLogged ? <UserButton /> : <NoUserButton />}
+        {isLogged ? <UserButton /> : <LoginButton />}
       </div>
     </div>
   );
 };
 export default Navbar;
+
 const ChatTitle = () => {
   const [title, setTitle] = useState('');
 
@@ -43,23 +43,23 @@ const ChatTitle = () => {
   };
 
   return (
-    <Input
+    <input
       placeholder="未命名对话"
       value={title}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
-      className="border-none"
+      className="border-none outline-none"
     />
   );
 };
 
 import {
   NewChatButton,
-  NoUserButton,
   ShareButton,
   ToggleButton,
   UserButton,
 } from '@/components/buttons';
+import LoginButton from '@/components/buttons/login-button';
 import {
   Select,
   SelectContent,
