@@ -1,0 +1,96 @@
+{
+  "log": [
+    {
+      "sender": "model1",
+      "message": "Hello, I am model1"
+    },
+    {
+      "sender": "user",
+      "message": "Hello, I am user"
+    },
+    {
+      "sender": "model1",
+      "message": "How can I help you?"
+    },
+    {
+      "sender": "user",
+      "message": "I am looking for a new car"
+    },
+    {
+      "sender": "model1",
+      "message": "What type of car are you looking for?"
+    },
+    {
+      "sender": "user",
+      "message": "I am looking for a sedan"
+    },
+    {
+      "sender": "model1",
+      "message": "What is your budget?"
+    },
+    {
+      "sender": "user",
+      "message": "I am looking for a car under 10 lakhs"
+    },
+    {
+      "sender": "model1",
+      "message": "I have a few options for you. Would you like to see them?"
+    },
+    {
+      "sender": "user",
+      "message": "Yes, please"
+    },
+    {
+      "sender": "model1",
+      "message": "Here are a few options for you"
+    },
+    {
+      "sender": "model1",
+      "message": "1. Maruti Suzuki Dzire"
+    },
+    {
+      "sender": "model1",
+      "message": "2. Honda City"
+    },
+    {
+      "sender": "model1",
+      "message": "3. Hyundai Verna"
+    },
+    {
+      "sender": "model1",
+      "message": "4. Skoda Rapid"
+    },
+    {
+      "sender": "model1",
+      "message": "5. Volkswagen Vento"
+    },
+    {
+      "sender": "model1",
+      "message": "6. Toyota Yaris"
+    },
+    {
+      "sender": "model1",
+      "message": "7. Tata Tigor"
+    },
+    {
+      "sender": "model1",
+      "message": "8. Ford Aspire"
+    },
+    {
+      "sender": "model1",
+      "message": "9. Nissan Sunny"
+    },
+    {
+      "sender": "model1",
+      "message": "10. Fiat Linea"
+    },
+    {
+      "sender": "model1",
+      "message": "Which one would you like to know more about?"
+    },
+    {
+      "sender": "user",
+      "message": "I would like to know more about Maruti Suzuki Dzire"
+    }
+  ]
+}

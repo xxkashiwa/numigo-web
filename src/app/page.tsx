@@ -1,11 +1,50 @@
 'use client';
 
+import dialog from '@/assets/dialog1.json';
+import AiBubble from '@/components/bubbles/ai-bubble';
+import UserBubble from '@/components/bubbles/user-bubble';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+interface Dialog {
+  sender: string;
+  message: string;
+}
 const Home = () => {
+  const [isChatting, setIsChatting] = useState<boolean>(false);
+  const logs = dialog.log as Dialog[];
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="mb-[10%] flex w-[44%] flex-col items-center justify-center gap-6 p-2">
-        <h1 className="text-3xl font-extrabold">有什么可以帮忙的？</h1>
-        <InputBox />
+    <div className="relative flex h-full w-full items-center justify-center">
+      <Button
+        className="absolute right-4 top-4"
+        onClick={() => {
+          setIsChatting(!isChatting);
+        }}
+      >
+        debug
+      </Button>
+      <div
+        className={` ${isChatting ? '' : 'mb-[10%]'} flex h-full w-[90%] flex-col items-center justify-center p-2 lg:w-[80%]`}
+      >
+        <div
+          className={`flex w-full max-w-3xl flex-col items-center justify-center gap-6 ${
+            isChatting ? 'h-full justify-between py-7' : ''
+          }`}
+        >
+          {isChatting ? (
+            <div className="flex w-full flex-col gap-2">
+              {logs.map((log, index) => {
+                return log.sender === 'user' ? (
+                  <UserBubble message={log.message} key={index} />
+                ) : (
+                  <AiBubble message={log.message} key={index} />
+                );
+              })}
+            </div>
+          ) : (
+            <h1 className="text-3xl font-extrabold">有什么可以帮忙的？</h1>
+          )}
+          <InputBox />
+        </div>
       </div>
     </div>
   );
