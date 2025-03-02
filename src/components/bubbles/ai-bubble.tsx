@@ -1,7 +1,10 @@
+import MarkdownRenderer from '../markdown-render';
 const AiBubble = ({ message }: { message: string }) => {
   return (
     <div className="flex w-full">
-      <p>{message}</p>
+      <div className="w-full">
+        <MarkdownRenderer markdown={message} />
+      </div>
     </div>
   );
 };
