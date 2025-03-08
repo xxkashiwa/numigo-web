@@ -2,7 +2,7 @@
 import dialog from '@/assets/dialog1.json';
 import AiBubble from '@/components/bubbles/ai-bubble';
 import UserBubble from '@/components/bubbles/user-bubble';
-import { InputBox } from '../page';
+import InputBox from '@/components/inputbox';
 interface Dialog {
   sender: string;
   message: string;
