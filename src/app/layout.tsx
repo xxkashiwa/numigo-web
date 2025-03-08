@@ -32,15 +32,6 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css"
         />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} flex h-full w-full antialiased`}
-      >
-        <SidebarProvider defaultOpen={false}>
-          <AppSidebar />
-          <main className="flex h-full w-full flex-col p-2">
-            <Navbar />
-            {children}
           </main>
         </SidebarProvider>
       </body>

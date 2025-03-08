@@ -3,6 +3,7 @@
 import dialog from '@/assets/dialog1.json';
 import AiBubble from '@/components/bubbles/ai-bubble';
 import UserBubble from '@/components/bubbles/user-bubble';
+import Mermaid from '@/components/mermaid';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 interface Dialog {
@@ -10,12 +11,20 @@ interface Dialog {
   message: string;
 }
 const Home = () => {
+  const chart = `
+  graph TD
+  A[Hard edge] -->|Link text| B(Round edge)
+  B --> C{Decision}
+  C -->|One| D[Result one]
+  C -->|Two| E[Result two]
+  `;
+
   const [isChatting, setIsChatting] = useState<boolean>(false);
   const logs = dialog.log as Dialog[];
   return (
-    <div className="relative flex h-full w-full items-center justify-center">
+    <div className="flex h-full w-full">
       <Button
-        className="absolute right-4 top-4"
+        className="fixed right-4 top-10"
         onClick={() => {
           setIsChatting(!isChatting);
         }}
@@ -23,27 +32,36 @@ const Home = () => {
         debug
       </Button>
       <div
-        className={` ${isChatting ? '' : 'mb-[10%]'} flex h-full w-[90%] flex-col items-center justify-center p-2 lg:w-[80%]`}
+        className={` ${isChatting ? '' : 'mb-[10%]'} flex h-full w-full flex-col items-center justify-center py-2`}
       >
         <div
-          className={`flex w-full max-w-3xl flex-col items-center justify-center gap-6 ${
+          className={`flex w-full flex-col items-center justify-center gap-6 ${
             isChatting ? 'h-full justify-between py-7' : ''
           }`}
         >
           {isChatting ? (
-            <div className="flex w-full flex-col gap-2">
-              {logs.map((log, index) => {
-                return log.sender === 'user' ? (
-                  <UserBubble message={log.message} key={index} />
-                ) : (
-                  <AiBubble message={log.message} key={index} />
-                );
-              })}
+            <div className="flex h-[75vh] w-full flex-col items-center gap-2 overflow-y-auto">
+              <div className="w-1/2">
+                {logs.map((log, index) => {
+                  return log.sender === 'user' ? (
+                    <>
+                      <UserBubble message={log.message} key={index} />
+                      <Mermaid chart={chart} />
+                    </>
+                  ) : (
+                    <>
+                      <AiBubble message={log.message} key={index} />
+                    </>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <h1 className="text-3xl font-extrabold">有什么可以帮忙的？</h1>
           )}
-          <InputBox />
+          <div className="w-1/2">
+            <InputBox />
+          </div>
         </div>
       </div>
     </div>
