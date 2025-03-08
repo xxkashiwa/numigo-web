@@ -31,6 +31,14 @@ const Home = () => {
       >
         debug
       </Button>
+      <Button
+        className="fixed right-4 top-20"
+        onClick={() => {
+          window.location.href = '/chat';
+        }}
+      >
+        chat page
+      </Button>
       <div
         className={` ${isChatting ? '' : 'mb-[10%]'} flex h-full w-full flex-col items-center justify-center py-2`}
       >
@@ -68,7 +76,7 @@ const Home = () => {
   );
 };
 
-const InputBox = () => {
+export const InputBox = () => {
   const handleTextareaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
     textarea.style.height = 'auto';
