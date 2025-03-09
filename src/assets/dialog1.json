@@ -10,7 +10,7 @@
     },
     {
       "sender": "model1",
-      "message": "**model1**: How can I help you?"
+      "message": "**model1**: How can I help you? $$ $$"
     },
     {
       "sender": "user",
