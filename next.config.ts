@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['www.plantuml.com'],
   },
+  experimental: {
+    externalDir: true,
+  },
 };
 
 export default nextConfig;

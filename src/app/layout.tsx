@@ -28,10 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
+        {/* <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css"
-        />
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+          crossOrigin="anonymous"
+        /> */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex h-full w-full overflow-hidden antialiased`}

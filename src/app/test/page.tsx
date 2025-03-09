@@ -34,9 +34,7 @@ const Python = ({ children }: { children: string }) => {
   );
 };
 const TestPage = () => {
-  const rawMdx = `$$ \\frac{z}{2y} = 4 \\Rightarrow z = 8y $$ <Python>print('hello world')</Python>\n 
- <Plantuml>@startuml\nstart\n:确定初始条件: 3英里喝1.5品脱;\n:计算喝水速率: 每英里消耗水量 = 1.5 / 3;\n:应用速率到后续距离: 下10英里的总消耗量 = 10 * 每英里消耗水量;\n:输出结果: 总消耗量为5品脱;\nstop\n@enduml</Plantuml>\n
-  `;
+  const rawMdx = `"problem": "If $\\displaystyle \\left(\\frac{3}{4}\\right)^x=\\frac{81}{256}$, what must $x$ be?", "translated_problem": "如果 $\\left(\\frac{3}{4}\\right)^x = \\frac{81}{256}$，那么 $x$ 必须是多少？", "level": "Level 1", "type": "Algebra", "solution": "Remembering that $\\left(\\frac{a}{b}\\right)^n=\\frac{a^n}{b^n}$, we have $$ \\left(\\frac{3}{4}\\right)^x=\\frac{3^x}{4^x}=\\frac{81}{256}$$Comparing numerators, $3^x=81$ so $x=4$.\n\nIndeed, for the denominators we have $4^x=4^4=256$, as desired. Thus, $x=\\boxed{4}$."`;
 
   const [source, setSource] = useState<any>(null);
 
@@ -45,10 +43,11 @@ const TestPage = () => {
       const serialized = await serialize(rawMdx, {
         mdxOptions: {
           remarkPlugins: [remarkMath],
-          rehypePlugins: [rehypeKatex],
+          rehypePlugins: [[rehypeKatex]],
         },
       });
       setSource(serialized);
+
       console.log('serialized: ', serialized);
     };
     serializeContent();
@@ -61,7 +60,9 @@ const TestPage = () => {
   return (
     <div className="flex h-full w-full p-10">
       {source ? (
-        <MDXRemote {...source} components={components} />
+        <div>
+          <MDXRemote {...source} components={components} />
+        </div>
       ) : (
         <div>Loading...</div>
       )}
