@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mdx-js/react": "^3.1.0",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-select": "^2.1.6",
@@ -21,16 +22,13 @@
     "input-otp": "^1.4.2",
     "katex": "^0.16.21",
     "lucide-react": "^0.475.0",
-    "markdown-it": "^14.1.0",
-    "markdown-it-katex": "^2.0.3",
-    "mermaid": "^11.4.1",
     "next": "15.1.6",
     "next-mdx-remote": "^5.0.0",
     "plantuml-encoder": "^1.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-highlight": "^0.15.0",
     "rehype-katex": "^7.0.1",
-    "rehype-raw": "^7.0.0",
     "remark-math": "^6.0.0",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7"
@@ -42,6 +40,7 @@
     "@types/plantuml-encoder": "^1.4.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-highlight": "^0.12.8",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
