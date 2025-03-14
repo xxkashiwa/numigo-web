@@ -1,9 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { AuthService } from '@/lib/auth-service';
+import {
+  ConversationService,
+  MessageCreateData,
+} from '@/lib/conversation-service';
+import { useEffect, useState } from 'react';
 
 const InputBox = () => {
   const [inputText, setInputText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentConversationId, setCurrentConversationId] = useState<
+    number | null
+  >(null);
+
+  // 在组件加载时检查是否有当前会话ID
+  useEffect(() => {
+    // 从localStorage获取当前会话ID
+    const storedConversationId = localStorage.getItem('currentConversationId');
+    if (storedConversationId) {
+      setCurrentConversationId(parseInt(storedConversationId));
+    }
+  }, []);
 
   const handleTextareaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
@@ -12,42 +30,210 @@ const InputBox = () => {
     setInputText(textarea.value);
   };
 
-  const handleSendMessage = () => {
-    if (!inputText.trim()) return;
+  const handleSendMessage = async () => {
+    if (!inputText.trim() || isLoading) return;
 
-    // 获取当前对话记录
-    const currentLogs = JSON.parse(localStorage.getItem('chatLogs') || '[]');
+    setIsLoading(true);
 
-    // 添加用户消息
-    currentLogs.push({
-      sender: 'user',
-      message: inputText,
-    });
+    try {
+      // 获取当前对话记录
+      const currentLogs = JSON.parse(localStorage.getItem('chatLogs') || '[]');
 
-    // 添加固定的模型回复
-    currentLogs.push({
-      sender: 'model1',
-      message: '收到',
-    });
+      // 添加用户消息到本地存储
+      currentLogs.push({
+        sender: 'user',
+        message: inputText,
+      });
 
-    // 保存更新后的对话记录
-    localStorage.setItem('chatLogs', JSON.stringify(currentLogs));
+      // 更新本地存储并触发UI更新
+      localStorage.setItem('chatLogs', JSON.stringify(currentLogs));
+      window.dispatchEvent(
+        new CustomEvent('chatUpdated', {
+          detail: { scrollToTop: false },
+        })
+      );
 
-    // 清空输入框
-    setInputText('');
+      // 准备发送到API的消息数据
+      const messageData: MessageCreateData = {
+        content: inputText,
+      };
 
-    // 重置输入框高度
-    const textarea = document.querySelector('textarea');
-    if (textarea) {
-      textarea.style.height = 'auto';
+      // 清空输入框
+      setInputText('');
+
+      // 重置输入框高度
+      const textarea = document.querySelector('textarea');
+      if (textarea) {
+        textarea.style.height = 'auto';
+      }
+
+      // 检查用户是否已登录
+      if (!AuthService.isLoggedIn()) {
+        // 未登录时使用直接对话模式
+        let responseContent = '';
+
+        await ConversationService.chatWithLLM({ query: inputText }, chunk => {
+          // 累积响应内容
+          responseContent += chunk;
+
+          // 更新临时响应到UI
+          const updatedLogs = JSON.parse(
+            localStorage.getItem('chatLogs') || '[]'
+          );
+
+          // 检查是否已有模型回复，如果有则更新，否则添加新回复
+          const modelResponseIndex = updatedLogs.findIndex(
+            (log: any) => log.sender === 'model1' && log.isPartial
+          );
+
+          if (modelResponseIndex >= 0) {
+            updatedLogs[modelResponseIndex].message = responseContent;
+          } else {
+            updatedLogs.push({
+              sender: 'model1',
+              message: responseContent,
+              isPartial: true,
+            });
+          }
+
+          localStorage.setItem('chatLogs', JSON.stringify(updatedLogs));
+          window.dispatchEvent(
+            new CustomEvent('chatUpdated', {
+              detail: { scrollToTop: false },
+            })
+          );
+        });
+
+        // 流式响应完成后，更新最终响应
+        const finalLogs = JSON.parse(localStorage.getItem('chatLogs') || '[]');
+        const finalModelResponseIndex = finalLogs.findIndex(
+          (log: any) => log.sender === 'model1' && log.isPartial
+        );
+
+        if (finalModelResponseIndex >= 0) {
+          finalLogs[finalModelResponseIndex].message = responseContent;
+          finalLogs[finalModelResponseIndex].isPartial = false;
+        }
+
+        localStorage.setItem('chatLogs', JSON.stringify(finalLogs));
+        window.dispatchEvent(
+          new CustomEvent('chatUpdated', {
+            detail: { scrollToTop: false },
+          })
+        );
+      } else {
+        // 已登录用户，使用会话模式
+        // 如果没有当前会话，创建一个新会话
+        if (!currentConversationId) {
+          const response = await ConversationService.createConversation({
+            title:
+              inputText.substring(0, 30) + (inputText.length > 30 ? '...' : ''),
+          });
+
+          if (response.data) {
+            setCurrentConversationId(response.data.id);
+            localStorage.setItem(
+              'currentConversationId',
+              response.data.id.toString()
+            );
+          } else {
+            throw new Error('创建会话失败');
+          }
+        }
+
+        // 确保此时有会话ID
+        const conversationId =
+          currentConversationId ||
+          (localStorage.getItem('currentConversationId')
+            ? parseInt(localStorage.getItem('currentConversationId')!)
+            : null);
+
+        if (!conversationId) {
+          throw new Error('无法获取会话ID');
+        }
+
+        // 发送消息并获取流式响应
+        let responseContent = '';
+
+        await ConversationService.sendMessage(
+          conversationId,
+          messageData,
+          chunk => {
+            // 累积响应内容
+            responseContent += chunk;
+
+            // 更新临时响应到UI
+            const updatedLogs = JSON.parse(
+              localStorage.getItem('chatLogs') || '[]'
+            );
+
+            // 检查是否已有模型回复，如果有则更新，否则添加新回复
+            const modelResponseIndex = updatedLogs.findIndex(
+              (log: any) => log.sender === 'model1' && log.isPartial
+            );
+
+            if (modelResponseIndex >= 0) {
+              updatedLogs[modelResponseIndex].message = responseContent;
+            } else {
+              updatedLogs.push({
+                sender: 'model1',
+                message: responseContent,
+                isPartial: true,
+              });
+            }
+
+            localStorage.setItem('chatLogs', JSON.stringify(updatedLogs));
+            window.dispatchEvent(
+              new CustomEvent('chatUpdated', {
+                detail: { scrollToTop: false },
+              })
+            );
+          }
+        );
+
+        // 流式响应完成后，保存LLM回复到服务器
+        await ConversationService.saveLLMResponse(
+          conversationId,
+          responseContent
+        );
+
+        // 更新最终响应
+        const finalLogs = JSON.parse(localStorage.getItem('chatLogs') || '[]');
+        const finalModelResponseIndex = finalLogs.findIndex(
+          (log: any) => log.sender === 'model1' && log.isPartial
+        );
+
+        if (finalModelResponseIndex >= 0) {
+          finalLogs[finalModelResponseIndex].message = responseContent;
+          finalLogs[finalModelResponseIndex].isPartial = false;
+        }
+
+        localStorage.setItem('chatLogs', JSON.stringify(finalLogs));
+        window.dispatchEvent(
+          new CustomEvent('chatUpdated', {
+            detail: { scrollToTop: false },
+          })
+        );
+      }
+    } catch (error) {
+      console.error('发送消息失败:', error);
+
+      // 显示错误消息
+      const currentLogs = JSON.parse(localStorage.getItem('chatLogs') || '[]');
+      currentLogs.push({
+        sender: 'model1',
+        message: '消息发送失败，请稍后重试。',
+      });
+
+      localStorage.setItem('chatLogs', JSON.stringify(currentLogs));
+      window.dispatchEvent(
+        new CustomEvent('chatUpdated', {
+          detail: { scrollToTop: false },
+        })
+      );
+    } finally {
+      setIsLoading(false);
     }
-
-    // 触发页面刷新以显示新消息，并指示应该将最新消息显示在顶部
-    window.dispatchEvent(
-      new CustomEvent('chatUpdated', {
-        detail: { scrollToTop: true },
-      })
-    );
 
     // 检查当前页面路径，只有在非chat页面时才导航到chat页面
     if (!window.location.pathname.includes('/chat')) {
@@ -73,6 +259,7 @@ const InputBox = () => {
           onChange={handleTextareaInput}
           onInput={handleTextareaInput}
           onKeyDown={handleKeyDown}
+          disabled={isLoading}
         />
       </div>
       <div className="flex w-full justify-between pt-4">
