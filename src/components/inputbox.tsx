@@ -1,9 +1,67 @@
+'use client';
+
+import { useState } from 'react';
+
 const InputBox = () => {
+  const [inputText, setInputText] = useState('');
+
   const handleTextareaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
     textarea.style.height = 'auto';
     textarea.style.height = `${textarea.scrollHeight}px`;
+    setInputText(textarea.value);
   };
+
+  const handleSendMessage = () => {
+    if (!inputText.trim()) return;
+
+    // 获取当前对话记录
+    const currentLogs = JSON.parse(localStorage.getItem('chatLogs') || '[]');
+
+    // 添加用户消息
+    currentLogs.push({
+      sender: 'user',
+      message: inputText,
+    });
+
+    // 添加固定的模型回复
+    currentLogs.push({
+      sender: 'model1',
+      message: '收到',
+    });
+
+    // 保存更新后的对话记录
+    localStorage.setItem('chatLogs', JSON.stringify(currentLogs));
+
+    // 清空输入框
+    setInputText('');
+
+    // 重置输入框高度
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.style.height = 'auto';
+    }
+
+    // 触发页面刷新以显示新消息，并指示应该将最新消息显示在顶部
+    window.dispatchEvent(
+      new CustomEvent('chatUpdated', {
+        detail: { scrollToTop: true },
+      })
+    );
+
+    // 检查当前页面路径，只有在非chat页面时才导航到chat页面
+    if (!window.location.pathname.includes('/chat')) {
+      window.location.href = '/chat';
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
     <div className="flex w-full flex-col justify-between rounded-3xl border border-white/10 bg-white/5 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
       <div className="m-1 w-full">
@@ -11,7 +69,10 @@ const InputBox = () => {
           className="max-h-[200px] w-full resize-none border-none bg-inherit focus:outline-none focus:ring-0"
           placeholder="发送消息..."
           rows={1}
+          value={inputText}
+          onChange={handleTextareaInput}
           onInput={handleTextareaInput}
+          onKeyDown={handleKeyDown}
         />
       </div>
       <div className="flex w-full justify-between pt-4">
@@ -20,7 +81,7 @@ const InputBox = () => {
         </div>
         <div className="inline-flex gap-2">
           <ExpandButton />
-          <EnterButton />
+          <EnterButton onClick={handleSendMessage} />
         </div>
       </div>
     </div>
@@ -59,9 +120,12 @@ const ExpandButton = () => {
   );
 };
 
-const EnterButton = () => {
+const EnterButton = ({ onClick }: { onClick?: () => void }) => {
   return (
-    <button className="h-full w-9 rounded-3xl bg-black transition-all duration-300 hover:bg-opacity-60">
+    <button
+      className="h-full w-9 rounded-3xl bg-black transition-all duration-300 hover:bg-opacity-60"
+      onClick={onClick}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
