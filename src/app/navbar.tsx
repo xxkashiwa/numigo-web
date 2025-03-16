@@ -2,9 +2,11 @@
 import { useState } from 'react';
 
 import { useSidebar } from '@/components/ui/sidebar';
+import { useAuth } from '@/hooks/useAuth';
 const Navbar = () => {
   const { open } = useSidebar();
-  const isLogged = false;
+  const { isAuthenticated } = useAuth();
+  console.log(isAuthenticated);
   return (
     <div className="sticky flex h-[3vh] w-full items-center justify-between">
       <div className="inline-flex gap-2">
@@ -21,7 +23,7 @@ const Navbar = () => {
       </div>
       <div className="inline-flex">
         <ShareButton />
-        {isLogged ? <UserButton /> : <LoginButton />}
+        {isAuthenticated ? <UserButton /> : <LoginButton />}
       </div>
     </div>
   );

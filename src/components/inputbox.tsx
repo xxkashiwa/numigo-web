@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { AuthService } from '@/lib/auth-service';
+import { AuthService } from '@/services/auth-service';
 import {
   ConversationService,
   MessageCreateData,
-} from '@/lib/conversation-service';
+} from '@/services/conversation-service';
 import { useEffect, useState } from 'react';
 
 const InputBox = () => {

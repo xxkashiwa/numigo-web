@@ -19,7 +19,7 @@ import {
   AuthService,
   UserLoginData,
   UserRegisterData,
-} from '@/lib/auth-service';
+} from '@/services/auth-service';
 import { useState } from 'react';
 
 const LoginButton = () => {
@@ -284,34 +284,6 @@ const LoginButton = () => {
                     {showConfirmPassword ? <EyeOpenIcon /> : <EyeCloseIcon />}
                   </button>
                 </div>
-
-                {/* <div className="inline-flex w-full items-center justify-between space-x-2">
-                  <InputOTP
-                    maxLength={6}
-                    value={verificationCode}
-                    onChange={handleVerificationChange}
-                  >
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
-                    </InputOTPGroup>
-                  </InputOTP>
-                  <Button
-                    variant="secondary"
-                    onClick={handleSendVerification}
-                    disabled={isVerificationLoading || isVerificationSent}
-                  >
-                    {isVerificationLoading
-                      ? '发送中...'
-                      : isVerificationSent
-                        ? `${countdown}秒`
-                        : '发送验证码'}
-                  </Button>
-                </div> */}
               </CardContent>
               <CardFooter className="flex flex-col gap-2">
                 {registerError && (
@@ -330,7 +302,6 @@ const LoginButton = () => {
             </Card>
           </TabsContent>
         </Tabs>
-        {/* <DialogFooter>footer</DialogFooter> */}
       </DialogContent>
     </Dialog>
   );
