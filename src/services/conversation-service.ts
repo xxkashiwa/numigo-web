@@ -31,7 +31,7 @@ export interface MessageCreateData {
 
 export interface LLMRequestData {
   query: string;
-  history_chat?: Array<{ role: string; content: string }>;
+  history_chat: string[];
 }
 
 export class ConversationService {
@@ -100,5 +100,29 @@ export class ConversationService {
     onChunk: (chunk: string) => void
   ) {
     return apiClient.stream('/api/llm/chat', request, onChunk);
+  }
+  /**
+   * 将聊天记录转换为API所需的格式
+   * 将ChatLog[]格式转换为[Q1, A1, Q2, A2, ...]格式
+   */
+  static formatChatHistory(
+    chatLogs: { sender: string; message: string }[]
+  ): string[] {
+    const history: string[] = [];
+
+    for (let i = 0; i < chatLogs.length; i += 2) {
+      const userMessage = chatLogs[i];
+      const modelMessage = chatLogs[i + 1];
+
+      if (userMessage && userMessage.sender === 'user') {
+        history.push(userMessage.message);
+
+        if (modelMessage && modelMessage.sender === 'model1') {
+          history.push(modelMessage.message);
+        }
+      }
+    }
+
+    return history;
   }
 }

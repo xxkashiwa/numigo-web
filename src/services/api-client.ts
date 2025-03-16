@@ -13,6 +13,12 @@ export interface ApiResponse<T> {
   status: number;
 }
 
+export interface SSEResponse {
+  status: number;
+  error: string;
+  answer: string;
+}
+
 export class ApiClient {
   private token: string | null = null;
 
@@ -20,6 +26,19 @@ export class ApiClient {
     // 从localStorage获取token（如果存在）
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('auth_token');
+    }
+  }
+
+  /**
+   * 解析JSON字符串为对象
+   * 如果解析失败，返回null
+   */
+  static parseJSON<T>(jsonString: string): T | null {
+    try {
+      return JSON.parse(jsonString) as T;
+    } catch (e) {
+      console.error('JSON解析错误:', e);
+      return null;
     }
   }
 
@@ -148,6 +167,7 @@ export class ApiClient {
 
       const decoder = new TextDecoder();
       let done = false;
+      let buffer = '';
 
       while (!done) {
         const { value, done: doneReading } = await reader.read();
@@ -155,8 +175,28 @@ export class ApiClient {
 
         if (value) {
           const chunk = decoder.decode(value, { stream: !done });
-          onChunk(chunk);
+          buffer += chunk;
+          console.log('chunk', chunk);
+          // 处理可能包含多个JSON对象的情况（按行分割）
+          const lines = buffer.split('\n');
+          // 处理除最后一行外的所有行（它们应该是完整的）
+          for (let i = 0; i < lines.length - 1; i++) {
+            if (lines[i].trim()) {
+              const regex = /"answer"\s*:\s*"((?:\\"|\\n|[^"])*)"/;
+              const match = lines[i].match(regex);
+              if (match) {
+                onChunk(match[1]);
+              }
+            }
+          }
+          // 保留最后一行，可能是不完整的
+          buffer = lines[lines.length - 1];
         }
+      }
+
+      // 处理缓冲区中剩余的数据
+      if (buffer.trim()) {
+        onChunk(buffer);
       }
 
       return { status: response.status };
