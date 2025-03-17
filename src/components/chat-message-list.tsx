@@ -1,4 +1,4 @@
-import { useConversation } from '@/hooks/useConversation';
+import { useConversation } from '@/hooks/use-conversation';
 import { useEffect, useRef } from 'react';
 import { ChatMessage } from './chat-message';
 

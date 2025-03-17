@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import MDXRenderer from '../mdx-renderer';
+import MDXRenderer from '../mdx-components/mdx-renderer';
 const ModuleBubble = ({
   message,
   className,

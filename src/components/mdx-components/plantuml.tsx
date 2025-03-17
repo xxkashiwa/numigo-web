@@ -1,3 +1,4 @@
+import processJsonEscapes from '@/lib/process-json-escapes';
 import { Copy } from 'lucide-react';
 import plantumlEncoder from 'plantuml-encoder';
 import { useEffect, useState } from 'react';
@@ -25,13 +26,12 @@ const PlantUML = ({
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
-
+  const proceesedCode = processJsonEscapes(code);
   useEffect(() => {
     if (typeof code === 'string') {
       try {
         // 编码PlantUML代码
-        const encoded = plantumlEncoder.encode(code);
-        console.log('encoded', encoded);
+        const encoded = plantumlEncoder.encode(proceesedCode);
         // 使用公共PlantUML服务器生成图片URL
         const url = `https://www.plantuml.com/plantuml/img/${encoded}`;
         setImageUrl(url);
@@ -46,7 +46,7 @@ const PlantUML = ({
   // 复制代码到剪贴板
   const copyToClipboard = () => {
     if (typeof code === 'string') {
-      navigator.clipboard.writeText(code);
+      navigator.clipboard.writeText(proceesedCode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -159,7 +159,9 @@ const PlantUML = ({
 
       {showCode && (
         <div className="bg-gray-100 p-4">
-          <pre className="whitespace-pre-wrap text-sm text-black">{code}</pre>
+          <pre className="whitespace-pre-wrap text-sm text-black">
+            {proceesedCode}
+          </pre>
         </div>
       )}
 

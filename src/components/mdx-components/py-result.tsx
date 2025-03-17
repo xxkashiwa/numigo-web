@@ -4,15 +4,15 @@ import { useState } from 'react';
 import processJsonEscapes from '@/lib/process-json-escapes';
 import Highlight from 'react-highlight';
 /**
- * Python代码块组件
+ * PyResult
  * @param children - 代码内容
  * @param showLineNumbers - 是否显示行号
  * @param title - 代码块标题
  */
-const Python = ({
+const PyResult = ({
   code,
   showLineNumbers = true,
-  title = 'Python',
+  title = 'PyResult',
 }: {
   code: string;
   showLineNumbers?: boolean;
@@ -73,4 +73,4 @@ const Python = ({
   );
 };
 
-export default Python;
+export default PyResult;

@@ -1,6 +1,6 @@
 'use client';
 
-import MDXRenderer from './mdx-renderer';
+import MDXRenderer from './mdx-components/mdx-renderer';
 
 const PythonDemo = () => {
   // 包含Python代码块的MDX内容

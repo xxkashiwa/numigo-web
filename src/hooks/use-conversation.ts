@@ -1,4 +1,4 @@
-import { useConversationStore } from '@/store/useConversationStore';
+import { useConversationStore } from '@/store/use-conversation-store';
 import { useEffect } from 'react';
 
 export const useConversation = () => {

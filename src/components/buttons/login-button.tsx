@@ -15,17 +15,19 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  AuthService,
-  UserLoginData,
-  UserRegisterData,
-} from '@/services/auth-service';
+import { useAuth } from '@/hooks/use-auth';
+import { UserLoginData, UserRegisterData } from '@/services/auth-service';
 import { useState } from 'react';
 
 const LoginButton = () => {
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  // 使用useAuth钩子
+  const { login, register, isLoading, error, clearError, isAuthenticated } =
+    useAuth();
 
   // 添加登录表单状态
   const [loginForm, setLoginForm] = useState<UserLoginData>({
@@ -43,10 +45,7 @@ const LoginButton = () => {
   // 添加确认密码状态
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // 添加加载状态和错误信息
-  const [isLoginLoading, setIsLoginLoading] = useState(false);
-  const [isRegisterLoading, setIsRegisterLoading] = useState(false);
-  const [loginError, setLoginError] = useState('');
+  // 本地错误状态
   const [registerError, setRegisterError] = useState('');
 
   // 处理登录表单变化
@@ -77,28 +76,18 @@ const LoginButton = () => {
 
   // 处理登录请求
   const handleLogin = async () => {
-    setLoginError('');
-    setIsLoginLoading(true);
+    clearError();
+    await login(loginForm);
 
-    try {
-      const response = await AuthService.login(loginForm);
-
-      if (response.error) {
-        setLoginError(response.error);
-      } else {
-        // 登录成功，可以关闭对话框或跳转页面
-
-        window.location.reload(); // 简单处理：刷新页面
-      }
-    } catch (error) {
-      setLoginError('登录失败，请稍后重试');
-    } finally {
-      setIsLoginLoading(false);
+    // 登录成功后关闭对话框
+    if (isAuthenticated) {
+      setDialogOpen(false);
     }
   };
 
   // 处理注册请求
   const handleRegister = async () => {
+    clearError();
     setRegisterError('');
 
     // 验证密码
@@ -113,37 +102,16 @@ const LoginButton = () => {
       return;
     }
 
-    setIsRegisterLoading(true);
+    await register(registerForm);
 
-    try {
-      const response = await AuthService.register(registerForm);
-
-      if (response.error) {
-        setRegisterError(response.error);
-      } else {
-        // 注册成功，自动登录
-        const loginResponse = await AuthService.login({
-          username: registerForm.username,
-          password: registerForm.password,
-        });
-
-        if (loginResponse.error) {
-          setRegisterError('注册成功，但登录失败，请手动登录');
-        } else {
-          // 登录成功，可以关闭对话框或跳转页面
-
-          window.location.reload(); // 简单处理：刷新页面
-        }
-      }
-    } catch (error) {
-      setRegisterError('注册失败，请稍后重试');
-    } finally {
-      setIsRegisterLoading(false);
+    // 注册成功后关闭对话框
+    if (isAuthenticated) {
+      setDialogOpen(false);
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <button className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
           <NoAccountIcon />
@@ -195,17 +163,17 @@ const LoginButton = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                {loginError && (
+                {error && (
                   <div className="mb-2 w-full text-sm text-red-500">
-                    {loginError}
+                    {error}
                   </div>
                 )}
                 <Button
                   className="w-full"
                   onClick={handleLogin}
-                  disabled={isLoginLoading}
+                  disabled={isLoading}
                 >
-                  {isLoginLoading ? '登录中...' : '登陆'}
+                  {isLoading ? '登录中...' : '登陆'}
                 </Button>
               </CardFooter>
             </Card>
@@ -286,17 +254,17 @@ const LoginButton = () => {
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col gap-2">
-                {registerError && (
+                {(registerError || error) && (
                   <div className="w-full text-sm text-red-500">
-                    {registerError}
+                    {registerError || error}
                   </div>
                 )}
                 <Button
                   className="w-full"
                   onClick={handleRegister}
-                  disabled={isRegisterLoading}
+                  disabled={isLoading}
                 >
-                  {isRegisterLoading ? '注册中...' : '注册'}
+                  {isLoading ? '注册中...' : '注册'}
                 </Button>
               </CardFooter>
             </Card>

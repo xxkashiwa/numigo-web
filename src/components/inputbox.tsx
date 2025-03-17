@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useConversation } from '@/hooks/useConversation';
+import { useConversation } from '@/hooks/use-conversation';
 import { useState } from 'react';
 
 const InputBox = () => {

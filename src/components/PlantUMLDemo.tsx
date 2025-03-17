@@ -1,6 +1,6 @@
 'use client';
 
-import MDXRenderer from './mdx-renderer';
+import MDXRenderer from './mdx-components/mdx-renderer';
 
 const PlantUMLDemo = () => {
   // 包含PlantUML图表的MDX内容

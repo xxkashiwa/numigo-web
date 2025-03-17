@@ -176,20 +176,36 @@ export class ApiClient {
         if (value) {
           const chunk = decoder.decode(value, { stream: !done });
           buffer += chunk;
-          console.log('chunk', chunk);
           // 处理可能包含多个JSON对象的情况（按行分割）
           const lines = buffer.split('\n');
           // 处理除最后一行外的所有行（它们应该是完整的）
+          // 正则匹配
+          // for (let i = 0; i < lines.length - 1; i++) {
+          //   if (lines[i].trim()) {
+          //     const regex = /"answer"\s*:\s*"((?:\\"|\\n|[^"])*)"/;
+          //     const match = lines[i].match(regex);
+          //     if (match) {
+          //       onChunk(match[1]);
+          //     }
+          //   }
+          // }
           for (let i = 0; i < lines.length - 1; i++) {
-            if (lines[i].trim()) {
-              const regex = /"answer"\s*:\s*"((?:\\"|\\n|[^"])*)"/;
-              const match = lines[i].match(regex);
-              if (match) {
-                onChunk(match[1]);
+            const eventData = lines[i].match(/{.*}/);
+            // console.log('eventData', eventData);
+            if (eventData) {
+              try {
+                const json = JSON.parse(eventData[0]);
+                if (json.answer) {
+                  onChunk(json.answer);
+                  // console.log('json.answer', json.answer);
+                }
+              } catch (error) {
+                console.error('解析 JSON 失败:', eventData);
               }
+            } else {
+              onChunk('');
             }
           }
-          // 保留最后一行，可能是不完整的
           buffer = lines[lines.length - 1];
         }
       }
