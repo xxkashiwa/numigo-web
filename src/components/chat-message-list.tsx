@@ -1,6 +1,6 @@
 import { useConversation } from '@/hooks/useConversation';
 import { useEffect, useRef } from 'react';
-import { ChatMessage } from './ChatMessage';
+import { ChatMessage } from './chat-message';
 
 export const ChatMessageList = () => {
   const { chatLogs } = useConversation();

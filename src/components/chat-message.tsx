@@ -1,4 +1,5 @@
 import { ChatLog } from '@/store/useConversationStore';
+import MDXRenderer from './mdx-renderer';
 interface ChatMessageProps {
   message: ChatLog;
 }
@@ -36,12 +37,15 @@ const processJsonEscapes = (text: string): string => {
  * @returns 转换后的文本
  */
 const convertCustomTags = (text: string): string => {
+  let result = text;
   // 处理<Python>标签
-  let result = text.replace(
+  result = text.replace(
     /<Python(?:\s+title="([^"]*)")?(?:\s+showLineNumbers=\{(true|false)\})?>([\s\S]*?)<\/Python>/g,
     (_, title, showLineNumbers, code) => {
+      // 转义Python内容中的花括号
+      // const escapedCode = code.replace(/\{/g, '\\{').replace(/\}/g, '\\}');
       // 返回标准的MDX代码块格式
-      return `\`\`\`python\n${code.trim()}\n\`\`\``;
+      return `<Python code='${code.trim()}'></Python>`;
     }
   );
 
@@ -49,8 +53,10 @@ const convertCustomTags = (text: string): string => {
   result = result.replace(
     /<PlantUML(?:\s+title="([^"]*)")?(?:\s+alt="([^"]*)")?>([\s\S]*?)<\/PlantUML>/g,
     (_, title, alt, code) => {
+      // 转义PlantUML内容中的花括号
+      // const escapedCode = code.replace(/\{/g, '\\{').replace(/\}/g, '\\}');
       // 返回标准的MDX代码块格式，使用plantuml语言标识符
-      return `\`\`\`plantuml\n${code.trim()}\n\`\`\``;
+      return `<PlantUML code='${code.trim()}'></PlantUML>`;
     }
   );
 
@@ -79,10 +85,11 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         }`}
       >
         <div className="whitespace-pre-wrap break-words">
-          {message.isPartial
-            ? processedMessage
-            : // <MDXRenderer message={processedMessage} />
-              processedMessage}
+          {message.isPartial ? (
+            processedMessage
+          ) : (
+            <MDXRenderer message={processedMessage} />
+          )}
         </div>
         {message.isPartial && (
           <div className="mt-1 flex items-center">

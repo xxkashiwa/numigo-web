@@ -1,5 +1,5 @@
 'use client';
-import { ChatMessageList } from '@/components/ChatMessageList';
+import { ChatMessageList } from '@/components/chat-message-list';
 import InputBox from '@/components/inputbox';
 
 const ChatPage = () => {
