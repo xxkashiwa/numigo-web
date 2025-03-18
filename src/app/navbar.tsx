@@ -1,11 +1,14 @@
 'use client';
-import { useState } from 'react';
-
+import { NewChatButton, ShareButton, ToggleButton } from '@/components/buttons';
+import LoginDialog from '@/components/dialogs/login-dialog';
+import UserDialog from '@/components/dialogs/user-dialog';
 import { useSidebar } from '@/components/ui/sidebar';
 import { useAuth } from '@/hooks/use-auth';
+import { useState } from 'react';
 const Navbar = () => {
   const { open } = useSidebar();
   const { isAuthenticated } = useAuth();
+  console.log('isAuthenticated', isAuthenticated);
   return (
     <div className="sticky flex h-[3vh] w-full items-center justify-between">
       <div className="inline-flex gap-2">
@@ -22,7 +25,7 @@ const Navbar = () => {
       </div>
       <div className="inline-flex">
         <ShareButton />
-        {isAuthenticated ? <UserButton /> : <LoginButton />}
+        {isAuthenticated ? <UserDialog /> : <LoginDialog />}
       </div>
     </div>
   );
@@ -54,13 +57,6 @@ const ChatTitle = () => {
   );
 };
 
-import {
-  NewChatButton,
-  ShareButton,
-  ToggleButton,
-  UserButton,
-} from '@/components/buttons';
-import LoginButton from '@/components/buttons/login-button';
 import {
   Select,
   SelectContent,

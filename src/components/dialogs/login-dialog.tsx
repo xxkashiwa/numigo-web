@@ -16,10 +16,10 @@ import {
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/use-auth';
-import { UserLoginData, UserRegisterData } from '@/services/auth-service';
+import { UserLoginData, UserRegisterData } from '@/types/user';
 import { useState } from 'react';
 
-const LoginButton = () => {
+const LoginDialog = () => {
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -275,7 +275,7 @@ const LoginButton = () => {
   );
 };
 
-export default LoginButton;
+export default LoginDialog;
 
 const NoAccountIcon = () => {
   return (

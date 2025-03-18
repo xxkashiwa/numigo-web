@@ -178,17 +178,6 @@ export class ApiClient {
           buffer += chunk;
           // 处理可能包含多个JSON对象的情况（按行分割）
           const lines = buffer.split('\n');
-          // 处理除最后一行外的所有行（它们应该是完整的）
-          // 正则匹配
-          // for (let i = 0; i < lines.length - 1; i++) {
-          //   if (lines[i].trim()) {
-          //     const regex = /"answer"\s*:\s*"((?:\\"|\\n|[^"])*)"/;
-          //     const match = lines[i].match(regex);
-          //     if (match) {
-          //       onChunk(match[1]);
-          //     }
-          //   }
-          // }
           for (let i = 0; i < lines.length - 1; i++) {
             const eventData = lines[i].match(/{.*}/);
             // console.log('eventData', eventData);

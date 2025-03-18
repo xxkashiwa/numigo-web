@@ -1,3 +1,4 @@
+'use client';
 import { useAuthStore } from '@/store/use-auth-store';
 import { useEffect } from 'react';
 
@@ -5,31 +6,32 @@ export const useAuth = () => {
   const {
     user,
     isLoading,
+    authToken,
     error,
     isAuthenticated,
     login,
     register,
-    logout,
+    accessToken,
     fetchCurrentUser,
+    logout,
     clearError,
   } = useAuthStore();
 
-  // 组件挂载时检查用户状态
   useEffect(() => {
     if (isAuthenticated && !user) {
       fetchCurrentUser();
     }
   }, [isAuthenticated, user, fetchCurrentUser]);
-
   return {
     user,
     isLoading,
     error,
+    authToken,
     isAuthenticated,
     login,
     register,
     logout,
-    fetchCurrentUser,
+    accessToken,
     clearError,
   };
 };
