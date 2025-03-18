@@ -8,7 +8,7 @@ import { useState } from 'react';
 const Navbar = () => {
   const { open } = useSidebar();
   const { isAuthenticated } = useAuth();
-  console.log('isAuthenticated', isAuthenticated);
+  console.log('isAuthenticated in client', isAuthenticated);
   return (
     <div className="sticky flex h-[3vh] w-full items-center justify-between">
       <div className="inline-flex gap-2">
@@ -33,7 +33,8 @@ const Navbar = () => {
 export default Navbar;
 
 const ChatTitle = () => {
-  const [title, setTitle] = useState('');
+  const { chatTitle } = useConversation();
+  const [title, setTitle] = useState(chatTitle);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -65,6 +66,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useConversation } from '@/hooks/use-conversation';
 
 type ModelEntry = {
   id: string;

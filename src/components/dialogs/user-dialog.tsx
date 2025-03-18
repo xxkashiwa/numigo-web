@@ -11,9 +11,9 @@ const UserDialog = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <button className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
+        <div className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
           <UserIcon />
-        </button>
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

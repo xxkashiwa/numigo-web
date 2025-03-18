@@ -113,9 +113,9 @@ const LoginDialog = () => {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <button className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
+        <div className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
           <NoAccountIcon />
-        </button>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[450px]">
         <DialogHeader>

@@ -1,5 +1,4 @@
 import { useConversationStore } from '@/store/use-conversation-store';
-import { useEffect } from 'react';
 
 export const useConversation = () => {
   const {
@@ -7,25 +6,31 @@ export const useConversation = () => {
     isLoading,
     error,
     currentConversationId,
+    chatTitle,
+    setChatTitle,
     sendMessage,
     setCurrentConversationId,
+    fetchCurrentConversation,
     clearError,
     clearChatLogs,
   } = useConversationStore();
 
   // 组件挂载时从localStorage获取当前会话ID
-  useEffect(() => {
-    const storedConversationId = localStorage.getItem('currentConversationId');
-    if (storedConversationId && !currentConversationId) {
-      setCurrentConversationId(parseInt(storedConversationId));
-    }
-  }, [currentConversationId, setCurrentConversationId]);
+  // useEffect(() => {
+  //   const storedConversationId = localStorage.getItem('currentConversationId');
+  //   if (storedConversationId && !currentConversationId) {
+  //     setCurrentConversationId(parseInt(storedConversationId));
+  //   }
+  // }, [currentConversationId, setCurrentConversationId]);
 
   return {
+    chatTitle,
     chatLogs,
     isLoading,
     error,
     currentConversationId,
+    fetchCurrentConversation,
+    setChatTitle,
     sendMessage,
     setCurrentConversationId,
     clearError,

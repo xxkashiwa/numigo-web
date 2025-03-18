@@ -2,11 +2,18 @@
 'use client';
 
 import { useConversation } from '@/hooks/use-conversation';
+import { createConversation } from '@/services/conversation';
 import { useState } from 'react';
 
 const InputBox = () => {
   const [inputText, setInputText] = useState('');
-  const { isLoading, sendMessage, currentConversationId } = useConversation();
+  const {
+    isLoading,
+    sendMessage,
+    currentConversationId,
+    chatTitle,
+    setCurrentConversationId,
+  } = useConversation();
 
   const handleTextareaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
@@ -16,6 +23,16 @@ const InputBox = () => {
   };
 
   const handleSendMessage = async () => {
+    if (currentConversationId === null) {
+      const getId = createConversation({ title: chatTitle }).then(
+        (res: any) => {
+          console.log('res', res);
+          return res.id;
+        }
+      );
+      console.log('getId', getId);
+      setCurrentConversationId(await getId);
+    }
     if (!inputText.trim() || isLoading) return;
 
     // 发送消息
