@@ -69,8 +69,22 @@ export const useConversationStore = create<ConversationState>()(
         set({ chatTitle: title });
       },
       sendMessage: async (content: string) => {
-        if (get().currentConversationId === null) return;
+        if (get().currentConversationId === null) {
+          const id = await get().getConversationId();
+          set({
+            currentConversationId: id,
+          });
+        }
         set({ isLoading: true, error: null });
+        const updatedLogs: ChatLog[] = [
+          ...get().chatLogs,
+          {
+            sender: 'user' as const,
+            message: content,
+          },
+        ];
+
+        set({ chatLogs: updatedLogs });
         let responseContent = '';
         await sendMessage(
           get().currentConversationId!,
