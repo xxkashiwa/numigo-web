@@ -9,7 +9,7 @@ const ChatPage = () => {
 
   return (
     <div className="flex h-[95vh] w-full flex-col items-center justify-between">
-      <div ref={chatContainerRef} className="flex w-full overflow-y-scroll">
+      <div ref={chatContainerRef} className="flex w-full overflow-y-auto">
         <div className="flex w-full flex-col items-center">
           <div className="w-full md:max-w-3xl">
             <ChatMessageList />

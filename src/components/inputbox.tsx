@@ -3,7 +3,6 @@
 
 import { useConversation } from '@/hooks/use-conversation';
 import { useState } from 'react';
-
 const InputBox = () => {
   const [inputText, setInputText] = useState('');
   const { isLoading, sendMessage } = useConversation();
@@ -17,9 +16,13 @@ const InputBox = () => {
 
   const handleSendMessage = async () => {
     if (!inputText.trim() || isLoading) return;
+    // 检查当前页面路径，只有在非chat页面时才导航到chat页面
 
     // 发送消息
     await sendMessage(inputText);
+    if (!window.location.pathname.includes('/chat')) {
+      window.location.href = '/chat';
+    }
 
     // 清空输入框
     setInputText('');
@@ -28,11 +31,6 @@ const InputBox = () => {
     const textarea = document.querySelector('textarea');
     if (textarea) {
       textarea.style.height = 'auto';
-    }
-
-    // 检查当前页面路径，只有在非chat页面时才导航到chat页面
-    if (!window.location.pathname.includes('/chat')) {
-      window.location.href = '/chat';
     }
   };
 

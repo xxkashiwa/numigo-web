@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 import processJsonEscapes from '@/lib/process-json-escapes';
 import { Copy } from 'lucide-react';
 import plantumlEncoder from 'plantuml-encoder';

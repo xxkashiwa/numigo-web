@@ -2,7 +2,6 @@ import { Copy } from 'lucide-react';
 import { useState } from 'react';
 
 import processJsonEscapes from '@/lib/process-json-escapes';
-import Highlight from 'react-highlight';
 /**
  * PyResult
  * @param children - 代码内容
@@ -47,7 +46,7 @@ const PyResult = ({
 
   return (
     <div className="my-4 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
-      <div className="flex items-center justify-between bg-gray-800 px-4 py-2 text-white">
+      <div className="flex items-center justify-between bg-blue-900 px-4 py-2 text-white">
         <span className="text-sm">{title}</span>
         <button
           onClick={copyToClipboard}
@@ -66,7 +65,7 @@ const PyResult = ({
       <div className="relative">
         <div className="flex overflow-x-auto">
           {showLineNumbers && renderLineNumbers()}
-          <Highlight className="python w-full">{proceesedCode}</Highlight>
+          <div className="flex w-full items-center p-2">{proceesedCode}</div>
         </div>
       </div>
     </div>

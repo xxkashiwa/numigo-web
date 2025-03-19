@@ -38,6 +38,9 @@ export function AppSidebar() {
   const handleClick = (id: number) => {
     return () => {
       setCurrentConversationId(id);
+      if (!window.location.pathname.includes('/chat')) {
+        window.location.href = '/chat';
+      }
     };
   };
   return (

@@ -32,15 +32,6 @@ export const useAuthStore = create<AuthState>()(
       login: async (loginData: UserLoginData) => {
         set({ isLoading: true, error: null });
         try {
-          // const response = await AuthService.login(loginData);
-          // if (response.error) {
-          //   set({
-          //     error: response.error,
-          //     isLoading: false,
-          //     isAuthenticated: false,
-          //   });
-          //   return;
-          // }
           const response = await login(loginData);
 
           if (response.status === 200) {
@@ -106,7 +97,11 @@ export const useAuthStore = create<AuthState>()(
           });
         } catch (error) {
           set({
-            error: error instanceof Error ? error.message : '获取用户信息失败',
+            error:
+              error instanceof Error &&
+              error.message !== 'Request failed with status code 401'
+                ? error.message
+                : '',
             isLoading: false,
             isAuthenticated: false,
           });

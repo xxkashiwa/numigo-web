@@ -4,10 +4,12 @@ import LoginDialog from '@/components/dialogs/login-dialog';
 import UserDialog from '@/components/dialogs/user-dialog';
 import { useSidebar } from '@/components/ui/sidebar';
 import { useAuth } from '@/hooks/use-auth';
+import { useConversation } from '@/hooks/use-conversation';
 import { useState } from 'react';
 const Navbar = () => {
   const { open } = useSidebar();
   const { isAuthenticated } = useAuth();
+  const {} = useConversation();
   console.log('isAuthenticated in client', isAuthenticated);
   return (
     <div className="sticky flex h-[3vh] w-full items-center justify-between">
@@ -66,7 +68,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useConversation } from '@/hooks/use-conversation';
 
 type ModelEntry = {
   id: string;
@@ -74,14 +75,13 @@ type ModelEntry = {
 };
 const ModelSelector = () => {
   const models: ModelEntry[] = [
-    { id: '1', name: '模型 1' },
-    { id: '2', name: '模型 2' },
-    { id: '3', name: '模型 3' },
+    { id: '1', name: 'TIR 模型' },
+    { id: '2', name: 'COT 模型' },
   ];
   return (
     <Select>
       <SelectTrigger className="w-[120px] border-none focus:ring-0 focus:ring-offset-0">
-        <SelectValue placeholder="模型1" />
+        <SelectValue placeholder="TIR 模型" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

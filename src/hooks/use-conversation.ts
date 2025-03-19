@@ -1,5 +1,6 @@
 import { useConversationStore } from '@/store/use-conversation-store';
-
+import { useEffect } from 'react';
+import { useAuth } from './use-auth';
 export const useConversation = () => {
   const {
     chatLogs,
@@ -23,6 +24,12 @@ export const useConversation = () => {
   //     setCurrentConversationId(parseInt(storedConversationId));
   //   }
   // }, [currentConversationId, setCurrentConversationId]);
+  const { isAuthenticated } = useAuth();
+  useEffect(() => {
+    if (!currentConversationId && isAuthenticated) {
+      getConversationId();
+    }
+  }, [currentConversationId, isAuthenticated, getConversationId]);
 
   return {
     chatTitle,
