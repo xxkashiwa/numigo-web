@@ -57,7 +57,7 @@ export const useAuthStore = create<AuthState>()(
             });
           }
           // 登录成功后获取用户信息
-          // await get().fetchCurrentUser();
+          await get().fetchCurrentUser();
           set({ isLoading: false });
         } catch (error) {
           set({

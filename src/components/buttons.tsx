@@ -1,9 +1,21 @@
 'use client';
 
 import { useSidebar } from '@/components/ui/sidebar';
+import { useConversation } from '@/hooks/use-conversation';
+import { createConversation } from '@/services/conversation';
 const NewChatButton = () => {
+  const { chatTitle, setCurrentConversationId } = useConversation();
+  const newChat = async () => {
+    const response = await createConversation({ title: chatTitle });
+    const newId = response.data.id;
+    setCurrentConversationId(newId);
+  };
+
   return (
-    <button className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30">
+    <button
+      className="h-full w-9 rounded-xl bg-gray-600 bg-opacity-0 p-1 transition-all duration-300 hover:bg-opacity-30"
+      onClick={newChat}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"

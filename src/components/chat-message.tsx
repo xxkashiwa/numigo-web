@@ -25,7 +25,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
     >
       <div
         className={`max-w-[80%] rounded-lg p-3 ${
-          isUser ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'
+          isUser ? 'bg-blue-200 bg-opacity-50' : 'text-gray-800'
         }`}
       >
         <div className="whitespace-pre-wrap break-words">

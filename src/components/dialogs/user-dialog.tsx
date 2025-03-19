@@ -7,6 +7,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/use-auth';
+import { Button } from '../ui/button';
 const UserDialog = () => {
   return (
     <Dialog>
@@ -26,11 +27,12 @@ const UserDialog = () => {
   );
 };
 const UserInfo = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   return (
     <div>
       <p>用户名：{user?.username}</p>
       <p>邮箱：{user?.email}</p>
+      <Button onClick={logout}>登出</Button>
     </div>
   );
 };

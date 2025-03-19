@@ -11,6 +11,7 @@ export const useConversation = () => {
     sendMessage,
     setCurrentConversationId,
     fetchCurrentConversation,
+    getConversationId,
     clearError,
     clearChatLogs,
   } = useConversationStore();
@@ -33,6 +34,7 @@ export const useConversation = () => {
     setChatTitle,
     sendMessage,
     setCurrentConversationId,
+    getConversationId,
     clearError,
     clearChatLogs,
   };

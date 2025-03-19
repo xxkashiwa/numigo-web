@@ -1,3 +1,4 @@
+'use client';
 import { NewChatButton, ToggleButton } from '@/components/buttons';
 import {
   Sidebar,
@@ -6,7 +7,39 @@ import {
   SidebarGroup,
   SidebarHeader,
 } from '@/components/ui/sidebar';
+import { useAuth } from '@/hooks/use-auth';
+import { useConversation } from '@/hooks/use-conversation';
+import { getConversations } from '@/services/conversation';
+import { useEffect, useState } from 'react';
+import { Button } from '../ui/button';
+interface ConversationData {
+  title: string;
+  id: number;
+  updated_at: string;
+}
 export function AppSidebar() {
+  const { user } = useAuth();
+  const [conversations, setConversations] = useState<ConversationData[]>([]);
+  const { setCurrentConversationId, currentConversationId } = useConversation();
+  useEffect(() => {
+    if (!user) return;
+    const getConversationsData = async () => {
+      const response = await getConversations();
+      setConversations(
+        (response.data as ConversationData[]).sort((a, b) => {
+          return (
+            new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+          );
+        })
+      );
+    };
+    getConversationsData();
+  }, [user, currentConversationId]);
+  const handleClick = (id: number) => {
+    return () => {
+      setCurrentConversationId(id);
+    };
+  };
   return (
     <Sidebar variant="floating">
       <SidebarHeader>
@@ -16,7 +49,20 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>233</SidebarGroup>
+        <SidebarGroup>
+          <ul>
+            {conversations.map(conversation => (
+              <li key={conversation.id}>
+                <Button
+                  onClick={handleClick(conversation.id)}
+                  variant={'ghost'}
+                >
+                  {conversation.title + ' ' + conversation.updated_at}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>

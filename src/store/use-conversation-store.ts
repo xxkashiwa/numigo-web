@@ -1,6 +1,7 @@
 import {
   createConversation,
   formatChatHistory,
+  getMessages,
   saveResponse,
   sendMessage,
 } from '@/services/conversation';
@@ -23,6 +24,7 @@ interface ConversationState {
 
   // 操作方法
   getConversationId: () => Promise<number>;
+  fetchMessages: () => void;
   sendMessageWithoutSaving: (message: string) => Promise<void>;
   sendMessage: (message: string) => Promise<void>;
   setChatTitle: (title: string) => void;
@@ -223,8 +225,32 @@ export const useConversationStore = create<ConversationState>()(
         }
       },
       fetchCurrentConversation: async () => {},
+      fetchMessages: async () => {
+        if (get().currentConversationId === null) {
+          console.error('currentConversationId is null');
+          return;
+        }
+        set({ isLoading: true, error: null });
+
+        try {
+          const response = await getMessages(get().currentConversationId!);
+          const messages = response.data;
+          const chatLogs: ChatLog[] = messages.map((message: any) => ({
+            sender: message.is_user ? 'user' : 'model1',
+            message: message.content,
+          }));
+          set({ chatLogs, isLoading: false });
+        } catch (error) {
+          console.error('获取消息失败:', error);
+          set({
+            error: error instanceof Error ? error.message : '获取消息失败',
+            isLoading: false,
+          });
+        }
+      },
       setCurrentConversationId: (id: number | null) => {
         set({ currentConversationId: id });
+        get().fetchMessages();
       },
 
       clearError: () => set({ error: null }),

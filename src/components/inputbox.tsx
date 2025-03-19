@@ -6,13 +6,7 @@ import { useState } from 'react';
 
 const InputBox = () => {
   const [inputText, setInputText] = useState('');
-  const {
-    isLoading,
-    sendMessage,
-    currentConversationId,
-    chatTitle,
-    setCurrentConversationId,
-  } = useConversation();
+  const { isLoading, sendMessage } = useConversation();
 
   const handleTextareaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
@@ -69,7 +63,15 @@ const InputBox = () => {
         </div>
         <div className="inline-flex gap-2">
           <ExpandButton />
-          <EnterButton onClick={handleSendMessage} />
+          {isLoading ? (
+            <PauseButton
+              onClick={() => {
+                // window.location.reload();
+              }}
+            />
+          ) : (
+            <EnterButton onClick={handleSendMessage} />
+          )}
         </div>
       </div>
     </div>
@@ -122,6 +124,25 @@ const EnterButton = ({ onClick }: { onClick?: () => void }) => {
         className="h-full w-full fill-white"
       >
         <path d="M440-240v-368L296-464l-56-56 240-240 240 240-56 56-144-144v368h-80Z" />
+      </svg>
+    </button>
+  );
+};
+
+const PauseButton = ({ onClick }: { onClick?: () => void }) => {
+  return (
+    <button
+      className="h-full w-9 rounded-3xl bg-black transition-all duration-300 hover:bg-opacity-60"
+      onClick={onClick}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        className="h-full w-full fill-white p-1"
+      >
+        <path d="M214-74q-58.77 0-99.39-40.61Q74-155.23 74-214v-532q0-58.78 40.61-99.39Q155.23-886 214-886h532q58.78 0 99.39 40.61T886-746v532q0 58.77-40.61 99.39Q804.78-74 746-74H214Zm0-140h532v-532H214v532Zm0 0v-532 532Z" />
       </svg>
     </button>
   );
