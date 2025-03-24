@@ -3,8 +3,11 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { useAuthStore } from '@/store/use-auth-store';
 import axios, { AxiosRequestConfig } from 'axios';
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+// 修改为相对路径，使用 Next.js 的 API 路由代理
+const API_BASE_URL = '/api';
 // console.log('API_BASE_URL', API_BASE_URL);
+
 export default (config: AxiosRequestConfig) => {
   const instance = axios.create({
     baseURL: API_BASE_URL,
