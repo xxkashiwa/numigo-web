@@ -18,7 +18,6 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
   if (!debug) {
     processedMessage = convertCustomTags(processedMessage);
   }
-  console.log('processedMessage', processedMessage);
   return (
     <div
       className={`flex w-full ${isUser ? 'justify-end' : 'justify-start'} mb-4`}

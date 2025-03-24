@@ -1,3 +1,4 @@
+import { getCurrentModel } from '@/hooks/use-model';
 import request, { stream } from './request';
 
 interface ConversationCreateData {
@@ -48,7 +49,11 @@ const sendMessage = async (
   //     method: 'post',
   //     data,
   //   });
-  return stream(`/api/conversations/${id}/messages`, data, onChunk);
+  const currentModel = getCurrentModel();
+  if (currentModel === 'llm') {
+    return stream(`/api/conversations/${id}/messages`, data, onChunk);
+  }
+  return stream(`/api/tot/chat`, { query: data.content }, onChunk);
 };
 const saveResponse = async (id: number, data: ConversationMessageData) => {
   return request({
@@ -82,7 +87,7 @@ const chatWithoutSaving = async (
   request: LLMRequestData,
   onChunk: (chunk: string) => void
 ) => {
-  return stream('/api/llm/chat', request, onChunk);
+  return stream(`/api/llm/chat`, request, onChunk);
 };
 export {
   chatWithoutSaving,

@@ -10,7 +10,6 @@ const Navbar = () => {
   const { open } = useSidebar();
   const { isAuthenticated } = useAuth();
   const {} = useConversation();
-  console.log('isAuthenticated in client', isAuthenticated);
   return (
     <div className="sticky flex h-[3vh] w-full items-center justify-between">
       <div className="inline-flex gap-2">
@@ -68,26 +67,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useModelStore } from '@/store/use-model-store';
 
-type ModelEntry = {
-  id: string;
-  name: string;
-};
 const ModelSelector = () => {
-  const models: ModelEntry[] = [
-    { id: '1', name: 'TIR 模型' },
-    { id: '2', name: 'COT 模型' },
-  ];
+  const { modelList, setCurrentModel, currentModel } = useModelStore();
   return (
-    <Select>
+    <Select
+      onValueChange={(value: string) => {
+        setCurrentModel(value);
+      }}
+      value={currentModel}
+    >
       <SelectTrigger className="w-[120px] border-none focus:ring-0 focus:ring-offset-0">
-        <SelectValue placeholder="TIR 模型" />
+        <SelectValue placeholder="LLM 模型" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {models.map(model => (
-            <SelectItem value={model.name} key={model.id}>
-              {model.name}
+          {modelList.map((model, index) => (
+            <SelectItem value={model} key={index}>
+              {model.toUpperCase() + ' 模型'}
             </SelectItem>
           ))}
         </SelectGroup>
