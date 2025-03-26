@@ -12,7 +12,7 @@ const processJsonEscapes = (text: string): string => {
     return parsed;
   } catch (error) {
     // 如果解析失败，回退到简单的替换方法
-    console.log('JSON解析失败，回退到简单替换:', error);
+    // console.log('JSON解析失败，回退到简单替换:', error);
 
     // 简单替换常见的转义序列
     return text

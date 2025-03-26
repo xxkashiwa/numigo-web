@@ -48,7 +48,7 @@ const Python = ({
   return (
     <div className="my-4 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
       <div className="flex items-center justify-between bg-gray-800 px-4 py-2 text-white">
-        <span className="text-sm">{title}</span>
+        <span className="text-sm font-bold">{title}</span>
         <button
           onClick={copyToClipboard}
           className="text-gray-300 transition-colors hover:text-white"

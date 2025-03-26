@@ -110,18 +110,33 @@ export const useConversationStore = create<ConversationState>()(
 
             if (modelResponseIndex >= 0) {
               currentLogs[modelResponseIndex].message = responseContent;
-              const palntUMLIndex =
+              const plantUMLCloseIndex =
                 currentLogs[modelResponseIndex].message.indexOf('</PlantUML>');
-              if (palntUMLIndex !== -1) {
+              const pythonCloseINdex =
+                currentLogs[modelResponseIndex].message.indexOf('</Pthon>');
+              const pyResultCloseIndex =
+                currentLogs[modelResponseIndex].message.indexOf('</PyResult>');
+              if (
+                plantUMLCloseIndex !== -1 ||
+                pythonCloseINdex !== -1 ||
+                pyResultCloseIndex !== -1
+              ) {
                 currentLogs[modelResponseIndex].isPartial = false;
-                const plantUMLCode = currentLogs[
+                const closeIndex =
+                  plantUMLCloseIndex !== -1
+                    ? plantUMLCloseIndex + 12
+                    : pythonCloseINdex !== -1
+                      ? pythonCloseINdex + 9
+                      : pyResultCloseIndex + 12;
+                const customTag = currentLogs[
                   modelResponseIndex
-                ].message.substring(0, palntUMLIndex + 12);
+                ].message.substring(0, closeIndex);
 
-                const restText = currentLogs[
-                  modelResponseIndex
-                ].message.substring(palntUMLIndex + 12);
-                currentLogs[modelResponseIndex].message = plantUMLCode;
+                const restText =
+                  currentLogs[modelResponseIndex].message.substring(closeIndex);
+                // console.log('palntUMLIndex', palntUMLIndex);
+                responseContent = '';
+                currentLogs[modelResponseIndex].message = customTag;
                 currentLogs.push({
                   sender: 'model1' as const,
                   message: restText,

@@ -10,7 +10,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
   const isUser = message.sender === 'user';
   const debug = false;
   // 处理文本
-  let processedMessage = message.message ? message.message : '返回为空';
+  let processedMessage = message.message ? message.message : '';
 
   // 1. 处理JSON字符串中的转义字符
   processedMessage = processJsonEscapes(processedMessage);

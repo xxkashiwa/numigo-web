@@ -103,7 +103,6 @@ const stream = async (
               const json = JSON.parse(eventData[0]);
               if (json.answer) {
                 onChunk(json.answer);
-                // console.log('json.answer', json.answer);
               }
             } catch (error) {
               console.error('解析 JSON 失败:', eventData);

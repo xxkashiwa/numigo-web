@@ -17,7 +17,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/use-auth';
 import { UserLoginData, UserRegisterData } from '@/types/user';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const LoginDialog = () => {
   const [showLoginPassword, setShowLoginPassword] = useState(false);
@@ -28,6 +28,13 @@ const LoginDialog = () => {
   // 使用useAuth钩子
   const { login, register, isLoading, error, clearError, isAuthenticated } =
     useAuth();
+
+  // 当检测到用户未登录时自动弹出登录窗口
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setDialogOpen(true);
+    }
+  }, [isAuthenticated]);
 
   // 添加登录表单状态
   const [loginForm, setLoginForm] = useState<UserLoginData>({
