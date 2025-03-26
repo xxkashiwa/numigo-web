@@ -108,8 +108,35 @@ export const useConversationStore = create<ConversationState>()(
               log => log.sender === 'model1' && log.isPartial
             );
 
+            // 检查是否包含PlantUML结束标签
+            const plantUmlEndTagIndex = responseContent.indexOf('</PlantUML>');
+
             if (modelResponseIndex >= 0) {
-              currentLogs[modelResponseIndex].message = responseContent;
+              if (plantUmlEndTagIndex !== -1) {
+                // 分离PlantUML内容和后续内容
+                const plantUmlContent = responseContent.substring(
+                  0,
+                  plantUmlEndTagIndex + 11
+                ); // +11 包含</PlantUML>标签
+                const remainingContent = responseContent.substring(
+                  plantUmlEndTagIndex + 11
+                );
+
+                // 更新当前消息为PlantUML内容，并标记为非部分消息
+                currentLogs[modelResponseIndex].message = plantUmlContent;
+                currentLogs[modelResponseIndex].isPartial = false;
+
+                // 添加新消息包含剩余内容
+
+                currentLogs.push({
+                  sender: 'model1' as const,
+                  message: remainingContent,
+                  isPartial: true,
+                });
+              } else {
+                // 正常更新消息内容
+                currentLogs[modelResponseIndex].message = responseContent;
+              }
             } else {
               currentLogs.push({
                 sender: 'model1' as const,
