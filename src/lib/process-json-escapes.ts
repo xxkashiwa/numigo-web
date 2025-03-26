@@ -10,7 +10,7 @@ const processJsonEscapes = (text: string): string => {
     // 注意：需要在文本外面加上引号，使其成为有效的JSON字符串
     const parsed = JSON.parse(`"${text.replace(/"/g, '\\"')}"`);
     return parsed;
-  } catch (error) {
+  } catch (_) {
     // 如果解析失败，回退到简单的替换方法
     // console.log('JSON解析失败，回退到简单替换:', error);
 
