@@ -36,7 +36,7 @@ const PlantUML = ({
         // 编码PlantUML代码
         const encoded = plantumlEncoder.encode(proceesedCode);
         // 使用公共PlantUML服务器生成图片URL
-        const url = `https://www.plantuml.com/plantuml/img/${encoded}`;
+        const url = `https://www.plantuml.com/plantuml/png/${encoded}`;
         setImageUrl(url);
       } catch (error) {
         console.error('PlantUML编码错误:', error);
@@ -171,7 +171,7 @@ const PlantUML = ({
       <div className="w-full bg-white p-4">
         {isLoading ? (
           <div className="flex h-32 items-center justify-center">
-            <span>加载图表中...</span>
+            <span>{proceesedCode}</span>
           </div>
         ) : imageUrl ? (
           <div className="flex w-full justify-center overflow-auto">

@@ -39,6 +39,13 @@ const getMessages = async (id: number) => {
     method: 'get',
   });
 };
+
+const updateTitle = async (id: number, title: string) => {
+  return request({
+    url: `/api/conversations/${id}?title=${title}`,
+    method: 'patch',
+  });
+};
 const sendMessage = async (
   id: number,
   data: ConversationMessageData,
@@ -98,4 +105,5 @@ export {
   getMessages,
   saveResponse,
   sendMessage,
+  updateTitle,
 };

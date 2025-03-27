@@ -4,9 +4,10 @@ import { useSidebar } from '@/components/ui/sidebar';
 import { useConversation } from '@/hooks/use-conversation';
 import { createConversation } from '@/services/conversation';
 const NewChatButton = () => {
-  const { chatTitle, setCurrentConversationId } = useConversation();
+  const { setCurrentConversationId, setChatTitle } = useConversation();
   const newChat = async () => {
-    const response = await createConversation({ title: chatTitle });
+    const response = await createConversation({ title: '未使用对话' });
+    setChatTitle('未使用对话');
     const newId = response.data.id;
     setCurrentConversationId(newId);
   };

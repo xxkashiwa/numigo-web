@@ -20,7 +20,8 @@ interface ConversationData {
 export function AppSidebar() {
   const { user } = useAuth();
   const [conversations, setConversations] = useState<ConversationData[]>([]);
-  const { setCurrentConversationId, currentConversationId } = useConversation();
+  const { setCurrentConversationId, currentConversationId, chatTitle } =
+    useConversation();
   useEffect(() => {
     if (!user) return;
     const getConversationsData = async () => {
@@ -34,7 +35,7 @@ export function AppSidebar() {
       );
     };
     getConversationsData();
-  }, [user, currentConversationId]);
+  }, [user, currentConversationId, chatTitle]);
   const handleClick = (id: number) => {
     return () => {
       setCurrentConversationId(id);
@@ -60,7 +61,7 @@ export function AppSidebar() {
                   onClick={handleClick(conversation.id)}
                   variant={'ghost'}
                 >
-                  {conversation.title + ' ' + conversation.updated_at}
+                  {conversation.title}
                 </Button>
               </li>
             ))}

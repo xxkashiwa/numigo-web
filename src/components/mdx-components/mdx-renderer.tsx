@@ -8,6 +8,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { useEffect, useState } from 'react';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
+import './mdx.css';
 import PlantUML from './plantuml';
 import PyResult from './py-result';
 import Python from './python';
@@ -52,7 +53,11 @@ const MDXRenderer = ({ message, components = {} }: MDXRendererProps) => {
     ...components,
   };
 
-  return <MDXRemote {...source} components={allComponents} />;
+  return (
+    <div className="mdx-content">
+      <MDXRemote {...source} components={allComponents} />
+    </div>
+  );
 };
 
 export default MDXRenderer;

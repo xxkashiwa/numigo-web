@@ -1,0 +1,139 @@
+/* MDX基本样式 */
+
+/* 标题样式 */
+.mdx-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.mdx-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.mdx-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.mdx-content h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* 段落样式 */
+.mdx-content p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+/* 列表样式 */
+.mdx-content ul,
+.mdx-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.mdx-content ul {
+  list-style-type: disc;
+}
+
+.mdx-content ol {
+  list-style-type: decimal;
+}
+
+.mdx-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+/* 链接样式 */
+.mdx-content a {
+  color: #3b82f6;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mdx-content a:hover {
+  color: #2563eb;
+}
+
+/* 引用样式 */
+.mdx-content blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  font-style: italic;
+  color: #6b7280;
+}
+
+/* 表格样式 */
+.mdx-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.mdx-content th,
+.mdx-content td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.mdx-content th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.dark .mdx-content th {
+  background-color: #374151;
+}
+
+.dark .mdx-content th,
+.dark .mdx-content td {
+  border-color: #4b5563;
+}
+
+/* 水平线样式 */
+.mdx-content hr {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 1.5rem 0;
+}
+
+.dark .mdx-content hr {
+  border-color: #4b5563;
+}
+
+/* 图片样式 */
+.mdx-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+}
+
+/* 自定义组件样式补充 */
+/* 这些样式会与各组件自己的CSS文件配合使用 */
+.mdx-content .python-container,
+.mdx-content .plantuml-container,
+.mdx-content .py-result-container {
+  margin: 1rem 0;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
