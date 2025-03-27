@@ -20,6 +20,7 @@ export const useAuth = () => {
   useEffect(() => {
     if (!isAuthenticated && !user) fetchCurrentUser();
   }, [isAuthenticated, user, fetchCurrentUser]);
+
   return {
     user,
     isLoading,
