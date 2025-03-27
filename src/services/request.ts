@@ -11,7 +11,7 @@ const API_BASE_URL = '/api';
 export default (config: AxiosRequestConfig) => {
   const instance = axios.create({
     baseURL: API_BASE_URL,
-    timeout: 10000,
+    timeout: 20000,
     withCredentials: false,
   });
   instance.interceptors.request.use(

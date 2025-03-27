@@ -60,6 +60,7 @@ export function AppSidebar() {
                 <Button
                   onClick={handleClick(conversation.id)}
                   variant={'ghost'}
+                  className="inline-flex w-full items-center justify-start"
                 >
                   {conversation.title}
                 </Button>

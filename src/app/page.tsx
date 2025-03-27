@@ -3,7 +3,10 @@
 import InputBox from '@/components/inputbox';
 import { useConversation } from '@/hooks/use-conversation';
 const Home = () => {
-  const { isLoading } = useConversation();
+  const { isLoading, chatLogs } = useConversation();
+  if (chatLogs.length > 0) {
+    window.location.href = '/chat';
+  }
   return (
     <div className="flex h-[90vh] w-full">
       <div className="flex h-full w-full items-center justify-center">
