@@ -31,7 +31,7 @@ const LoginDialog = () => {
 
   // 当检测到用户未登录时自动弹出登录窗口
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && !dialogOpen) {
       setDialogOpen(true);
     }
   }, [isAuthenticated]);
