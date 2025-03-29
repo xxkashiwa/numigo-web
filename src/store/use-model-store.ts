@@ -10,8 +10,8 @@ interface ModelState {
 export const useModelStore = create<ModelState>()(
   persist(
     (set, get) => ({
-      currentModel: 'llm',
-      modelList: ['llm', 'tot'],
+      currentModel: 'tir',
+      modelList: ['tir', 'cot', 'tot'],
       setCurrentModel: (value: string) => {
         const index = get().modelList.findIndex(item => item === value);
         if (index < 0) return;

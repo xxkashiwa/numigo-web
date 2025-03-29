@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createConversation,
-  getConversation,
   getMessages,
   saveResponse,
   sendMessage,
-  updateTitle,
 } from '@/services/conversation';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -77,15 +75,6 @@ export const useConversationStore = create<ConversationState>()(
           set({
             currentConversationId: id,
           });
-        }
-        if (
-          (await getConversation(get().currentConversationId!)).data.title ===
-          '未使用对话'
-        ) {
-          const title = content.length > 5 ? content.substring(0, 5) : content;
-          console.log('id', get().currentConversationId!);
-          updateTitle(get().currentConversationId!, title);
-          get().setChatTitle(title);
         }
         set({ isLoading: true, error: null });
         const updatedLogs: ChatLog[] = [

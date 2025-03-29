@@ -57,9 +57,12 @@ const sendMessage = async (
   //     data,
   //   });
   const currentModel = getCurrentModel();
-  if (currentModel === 'llm') {
+  if (currentModel === 'tir') {
     return stream(`/api/conversations/${id}/messages`, data, onChunk);
+  } else if (currentModel === 'cot') {
+    return stream(`/api/conversations/${id}/messages?model=cot`, data, onChunk);
   }
+
   return stream(`/api/tot/chat`, { query: data.content }, onChunk);
 };
 const saveResponse = async (id: number, data: ConversationMessageData) => {

@@ -76,7 +76,7 @@ const ModelSelector = () => {
       value={currentModel}
     >
       <SelectTrigger className="w-[120px] border-none focus:ring-0 focus:ring-offset-0">
-        <SelectValue placeholder="LLM 模型" />
+        <SelectValue placeholder="tir 模型" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
