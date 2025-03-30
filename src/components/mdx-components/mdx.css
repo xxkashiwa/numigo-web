@@ -137,3 +137,7 @@
   border-radius: 0.375rem;
   overflow: hidden;
 }
+
+.mdx-content pre {
+  width: 100%;
+}

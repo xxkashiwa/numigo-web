@@ -51,11 +51,6 @@ const sendMessage = async (
   data: ConversationMessageData,
   onChunk: (chunk: string) => void
 ) => {
-  //   return request({
-  //     url: `/api/conversations/${id}/messages`,
-  //     method: 'post',
-  //     data,
-  //   });
   const currentModel = getCurrentModel();
   if (currentModel === 'tir') {
     return stream(`/api/conversations/${id}/messages`, data, onChunk);
@@ -63,7 +58,7 @@ const sendMessage = async (
     return stream(`/api/conversations/${id}/messages?model=cot`, data, onChunk);
   }
 
-  return stream(`/api/tot/chat`, { query: data.content }, onChunk);
+  return stream(`/api/conversations/${id}/messages?model=tot`, data, onChunk);
 };
 const saveResponse = async (id: number, data: ConversationMessageData) => {
   return request({

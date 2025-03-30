@@ -135,6 +135,11 @@ export const useConversationStore = create<ConversationState>()(
                 // console.log('palntUMLIndex', palntUMLIndex);
                 responseContent = '';
                 currentLogs[modelResponseIndex].message = customTag;
+                saveResponse(get().currentConversationId!, {
+                  content: customTag,
+                  is_user: false,
+                  conversation_id: get().currentConversationId!,
+                });
                 currentLogs.push({
                   sender: 'model1' as const,
                   message: restText,
