@@ -1,5 +1,5 @@
 'use client';
-import { NewChatButton, ShareButton, ToggleButton } from '@/components/buttons';
+import { NewChatButton, ToggleButton } from '@/components/buttons';
 import LoginDialog from '@/components/dialogs/login-dialog';
 import UserDialog from '@/components/dialogs/user-dialog';
 import { useSidebar } from '@/components/ui/sidebar';
@@ -22,7 +22,7 @@ const Navbar = () => {
       </div>
 
       <div className="inline-flex">
-        <ShareButton />
+        {/* <ShareButton /> */}
         {isAuthenticated ? <UserDialog /> : <LoginDialog />}
       </div>
     </div>
