@@ -16,13 +16,16 @@ const processJsonEscapes = (text: string): string => {
     // console.log('JSON解析失败，回退到简单替换:', error);
 
     // 简单替换常见的转义序列
-    return text
-      .replace(/\\n/g, '\n')
-      .replace(/\\r/g, '\r')
-      .replace(/\\t/g, '\t')
-      .replace(/\\\\/g, '\\')
-      .replace(/\\"/g, '"')
-      .replace(/\\'/g, "'");
+    return (
+      text
+        .replace(/\\n/g, '\n')
+        .replace(/\\r(?!ight)/g, '\r')
+        // 修改\t的替换逻辑，保留LaTeX命令中的\text
+        .replace(/\\t(?!ext)/g, '\t') // 只替换不是\text开头的\t
+        .replace(/\\\\/g, '\\')
+        .replace(/\\\"/g, '"')
+        .replace(/\\'/g, "'")
+    );
   }
 };
 

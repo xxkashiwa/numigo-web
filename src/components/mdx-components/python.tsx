@@ -63,7 +63,7 @@ const Python = ({
           )}
         </button>
       </div>
-      <div className="relative overflow-x-hidden">
+      <div className="relative">
         <div className="flex overflow-x-auto">
           {showLineNumbers && renderLineNumbers()}
           <Highlight className="python w-full">{proceesedCode}</Highlight>

@@ -111,7 +111,7 @@ export const useConversationStore = create<ConversationState>()(
               const plantUMLCloseIndex =
                 currentLogs[modelResponseIndex].message.indexOf('</PlantUML>');
               const pythonCloseINdex =
-                currentLogs[modelResponseIndex].message.indexOf('</Pthon>');
+                currentLogs[modelResponseIndex].message.indexOf('</Python>');
               const pyResultCloseIndex =
                 currentLogs[modelResponseIndex].message.indexOf('</PyResult>');
               if (
@@ -124,7 +124,7 @@ export const useConversationStore = create<ConversationState>()(
                   plantUMLCloseIndex !== -1
                     ? plantUMLCloseIndex + 12
                     : pythonCloseINdex !== -1
-                      ? pythonCloseINdex + 9
+                      ? pythonCloseINdex + 10
                       : pyResultCloseIndex + 12;
                 const customTag = currentLogs[
                   modelResponseIndex
