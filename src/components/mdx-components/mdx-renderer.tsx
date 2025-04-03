@@ -3,11 +3,20 @@
 
 import 'highlight.js/styles/github.css';
 import 'katex/dist/katex.min.css';
+import { AlertTriangle } from 'lucide-react';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import { useEffect, useState } from 'react';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../ui/card';
 import './mdx.css';
 import PlantUML from './plantuml';
 import PyResult from './py-result';
@@ -39,7 +48,26 @@ const MDXRenderer = ({ message, components = {} }: MDXRendererProps) => {
   }, [message]);
 
   if (!source) {
-    return <div>Loading...</div>;
+    return (
+      <Card className="my-4 border-destructive bg-destructive/10">
+        <CardHeader className="pb-2">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-destructive" />
+            <CardTitle className="text-destructive">渲染失败</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <CardDescription className="whitespace-pre-wrap text-destructive/90">
+            {message}
+          </CardDescription>
+        </CardContent>
+        <CardFooter className="pt-0">
+          <p className="rounded-xl bg-green-300 p-2 text-sm font-medium text-blue-600">
+            请向开发人员反馈
+          </p>
+        </CardFooter>
+      </Card>
+    );
   }
 
   // 合并默认组件和自定义组件

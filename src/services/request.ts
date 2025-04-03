@@ -3,7 +3,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { useAuthStore } from '@/store/use-auth-store';
 import axios, { AxiosRequestConfig } from 'axios';
-
+//'http://119.45.26.22:8123';
 // 修改为相对路径，使用 Next.js 的 API 路由代理
 const API_BASE_URL = '/api';
 // console.log('API_BASE_URL', API_BASE_URL);
@@ -11,7 +11,7 @@ const API_BASE_URL = '/api';
 export default (config: AxiosRequestConfig) => {
   const instance = axios.create({
     baseURL: API_BASE_URL,
-    timeout: 20000,
+    timeout: 180000,
     withCredentials: false,
   });
   instance.interceptors.request.use(
@@ -101,11 +101,12 @@ const stream = async (
           if (eventData) {
             try {
               const json = JSON.parse(eventData[0]);
-              if (json.answer) {
+              console.log('json', json);
+              if (json.answer && json.status !== 10) {
                 onChunk(json.answer);
               }
             } catch (error) {
-              console.error('解析 JSON 失败:', eventData);
+              console.log('解析 JSON 失败:', eventData);
             }
           } else {
             onChunk('');
