@@ -5,7 +5,7 @@ import { useAuthStore } from '@/store/use-auth-store';
 import axios, { AxiosRequestConfig } from 'axios';
 //'http://119.45.26.22:8123';
 // 修改为相对路径，使用 Next.js 的 API 路由代理
-const API_BASE_URL = 'http://119.45.26.22:8123';
+const API_BASE_URL = '/api';
 // console.log('API_BASE_URL', API_BASE_URL);
 
 export default (config: AxiosRequestConfig) => {
