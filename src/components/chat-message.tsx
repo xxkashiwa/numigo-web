@@ -20,7 +20,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
   }
   return (
     <div
-      className={`flex w-full ${isUser ? 'justify-end' : 'justify-start'} mb-4`}
+      className={`flex w-full ${isUser ? 'justify-end' : 'justify-start'} mb-4 text-xl`}
     >
       <div
         className={`max-w-[80%] rounded-lg p-3 ${

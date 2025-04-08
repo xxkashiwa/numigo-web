@@ -2,10 +2,11 @@
 'use client';
 
 import { useConversation } from '@/hooks/use-conversation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 const InputBox = () => {
   const [inputText, setInputText] = useState('');
   const { isLoading, sendMessage } = useConversation();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleTextareaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
@@ -16,9 +17,6 @@ const InputBox = () => {
 
   const handleSendMessage = async () => {
     if (!inputText.trim() || isLoading) return;
-    // 检查当前页面路径，只有在非chat页面时才导航到chat页面
-
-    // 发送消息
 
     // 清空输入框
     setInputText('');
@@ -41,10 +39,20 @@ const InputBox = () => {
     }
   };
 
+  const handleContainerClick = () => {
+    if (textareaRef.current && !isLoading) {
+      textareaRef.current.focus();
+    }
+  };
+
   return (
-    <div className="flex w-full flex-col justify-between rounded-3xl border border-white/10 bg-white/5 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
+    <div
+      className="flex w-full flex-col justify-between rounded-3xl border border-white/10 bg-white/5 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
+      onClick={handleContainerClick}
+    >
       <div className="m-1 w-full">
         <textarea
+          ref={textareaRef}
           className="max-h-[200px] w-full resize-none border-none bg-inherit focus:outline-none focus:ring-0"
           placeholder="发送消息..."
           rows={1}
@@ -55,7 +63,7 @@ const InputBox = () => {
           disabled={isLoading}
         />
       </div>
-      <div className="flex w-full justify-between pt-4">
+      <div className="flex w-full justify-between pt-8">
         <div className="inline-flex gap-2">{/* <AttachButton /> */}</div>
         <div className="inline-flex gap-2">
           {/* <ExpandButton /> */}

@@ -10,7 +10,7 @@ const Navbar = () => {
   const { isAuthenticated } = useAuth();
   const {} = useConversation();
   return (
-    <div className="sticky flex h-[3vh] w-full items-center justify-between">
+    <div className="sticky flex h-[5vh] w-full items-center justify-between">
       <div className="inline-flex gap-2">
         {open ? null : (
           <>
