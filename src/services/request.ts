@@ -93,6 +93,7 @@ const stream = async (
       if (value) {
         const chunk = decoder.decode(value, { stream: !done });
         buffer += chunk;
+        console.log('chunk\n', chunk);
         // 处理可能包含多个JSON对象的情况（按行分割）
         const lines = buffer.split('\n');
         for (let i = 0; i < lines.length - 1; i++) {
@@ -101,7 +102,7 @@ const stream = async (
           if (eventData) {
             try {
               const json = JSON.parse(eventData[0]);
-              console.log('json', json);
+              console.log('json\n', json);
               if (json.answer && json.status !== 10) {
                 onChunk(json.answer);
               }

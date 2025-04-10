@@ -8,7 +8,7 @@ const ChatPage = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="flex h-[95vh] w-full flex-col items-center justify-between">
+    <div className="flex h-[93vh] w-full flex-col items-center justify-between">
       <div ref={chatContainerRef} className="flex w-full overflow-y-auto">
         <div className="flex w-full flex-col items-center">
           <div className="w-full">
