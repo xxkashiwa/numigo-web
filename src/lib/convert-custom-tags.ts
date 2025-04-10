@@ -14,7 +14,11 @@ const convertCustomTags = (text: string): string => {
       .replace(/\\/g, '\\\\') // 转义反斜杠
       .replace(/\n/g, '\\n') // 转义换行符
       .replace(/\r/g, '\\r') // 转义回车符
-      .replace(/\t/g, '\\t'); // 转义制表符
+      .replace(/\t/g, '\\t') // 转义制表符
+      .replace(/"/g, '&quot;') // 使用HTML实体替换双引号
+      .replace(/'/g, '&apos;') // 使用HTML实体替换单引号
+      .replace(/</g, '&lt;') // 使用HTML实体替换小于号
+      .replace(/>/g, '&gt;'); // 使用HTML实体替换大于号
   };
 
   // 处理<Python>标签
