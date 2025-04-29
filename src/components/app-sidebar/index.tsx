@@ -10,8 +10,11 @@ import {
 import { useAuth } from '@/hooks/use-auth';
 import { useConversation } from '@/hooks/use-conversation';
 import { getConversations } from '@/services/conversation';
+import { Conversations } from '@ant-design/x';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { Button } from '../ui/button';
+import { Separator } from '../ui/separator';
+
 interface ConversationData {
   title: string;
   id: number;
@@ -36,37 +39,48 @@ export function AppSidebar() {
     };
     getConversationsData();
   }, [user, currentConversationId, chatTitle]);
-  const handleClick = (id: number) => {
-    return () => {
-      setCurrentConversationId(id);
-      if (!window.location.pathname.includes('/chat')) {
-        window.location.href = '/chat';
-      }
-    };
-  };
+
   return (
-    <Sidebar variant="floating">
+    <Sidebar>
       <SidebarHeader>
-        <div className="flex w-full justify-between">
-          <ToggleButton />
-          <NewChatButton />
+        <div className="flex flex-col gap-2">
+          <div className="flex w-full items-center justify-start">
+            <Image
+              src="/logo-title.png"
+              alt="logo-title"
+              width={1000}
+              height={70}
+              priority
+              className="w-2/3"
+            />
+          </div>
+
+          <div className="flex w-full justify-between">
+            <ToggleButton />
+            <NewChatButton />
+          </div>
+          <Separator />
+          <p className="text-sm text-muted-foreground">All conversations</p>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <ul>
-            {conversations.map(conversation => (
-              <li key={conversation.id}>
-                <Button
-                  onClick={handleClick(conversation.id)}
-                  variant={'ghost'}
-                  className="text-md inline-flex w-full items-center justify-start"
-                >
-                  {conversation.title}
-                </Button>
-              </li>
-            ))}
-          </ul>
+          <Conversations
+            items={conversations.map(item => ({
+              key: 'index' + item.id,
+              label: item.title,
+            }))}
+            key={conversations.length + 'conversations'}
+            onActiveChange={(value: string) => {
+              const id = Number(value.split('index')[1]);
+              if (id) {
+                setCurrentConversationId(id);
+                if (!window.location.pathname.includes('/chat')) {
+                  window.location.href = '/chat';
+                }
+              }
+            }}
+          />
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />

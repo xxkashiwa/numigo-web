@@ -1,14 +1,30 @@
 'use client';
+import AppSender from '@/components/app-sender';
 import { ChatMessageList } from '@/components/chat-message-list';
-import InputBox from '@/components/inputbox';
 import { useConversation } from '@/hooks/use-conversation';
+import { Welcome } from '@ant-design/x';
+import Image from 'next/image';
+
 const Home = () => {
   const { isLoading, chatLogs } = useConversation();
   if (chatLogs.length > 0 && !isLoading) {
     window.location.href = '/chat';
   }
+
+  // Create logo icon ReactNode
+  const logoIcon = (
+    <Image
+      src="/logo-icon.png"
+      alt="Logo"
+      width={59}
+      height={48}
+      priority
+      className="opacity-80 filter"
+    />
+  );
+
   return (
-    <div className="flex h-[90vh] w-full">
+    <div className="flex h-[90vh] w-full bg-background">
       <div className="flex h-full w-full items-center justify-center">
         <div className="flex h-full w-full flex-col items-center justify-center gap-7 md:max-w-3xl">
           {isLoading ? (
@@ -18,11 +34,16 @@ const Home = () => {
               </div>
             </div>
           ) : (
-            <h1 className="text-3xl font-extrabold">有什么可以帮忙的？</h1>
+            <Welcome
+              icon={logoIcon}
+              title="Hello, I'm NumiGo!"
+              description="I can assist you with your queries. Please feel free to ask me anything!"
+              className="w-full bg-transparent text-primary"
+            />
           )}
 
           <div className="w-full">
-            <InputBox />
+            <AppSender />
           </div>
         </div>
       </div>

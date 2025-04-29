@@ -16,14 +16,6 @@ export const useConversation = () => {
     clearError,
     clearChatLogs,
   } = useConversationStore();
-
-  // 组件挂载时从localStorage获取当前会话ID
-  // useEffect(() => {
-  //   const storedConversationId = localStorage.getItem('currentConversationId');
-  //   if (storedConversationId && !currentConversationId) {
-  //     setCurrentConversationId(parseInt(storedConversationId));
-  //   }
-  // }, [currentConversationId, setCurrentConversationId]);
   const { isAuthenticated } = useAuth();
   useEffect(() => {
     if (!currentConversationId && isAuthenticated) {

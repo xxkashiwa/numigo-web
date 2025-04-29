@@ -4,23 +4,28 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px; /* 设置基础字体大小 */
 }
 
+/* 增加全局文本大小 */
 @layer base {
+  html {
+    font-size: 18px; /* 从默认的16px增加到18px */
+  }
   :root {
-    --background: 0 0% 100%;
+    --background: 43 47% 94%; /* Beige background */
     --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
+    --card: 43 47% 94%;
     --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
+    --popover: 43 47% 94%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
+    --primary: 0 0% 90%; /* White-gray primary */
+    --primary-foreground: 240 10% 3.9%;
+    --secondary: 195 65% 65%;
     --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
+    --muted: 0 0% 85%; /* Light gray */
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
+    --accent: 195 65% 85%;
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -33,14 +38,14 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 43 47% 94%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-primary: 195 65% 75%;
+    --sidebar-primary-foreground: 240 10% 3.9%;
+    --sidebar-accent: 195 65% 85%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-border: 195 30% 85%;
+    --sidebar-ring: 195 65% 75%;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -86,8 +91,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-
 
 @layer base {
   * {

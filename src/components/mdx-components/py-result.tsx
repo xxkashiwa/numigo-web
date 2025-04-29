@@ -45,18 +45,20 @@ const PyResult = ({
   };
 
   return (
-    <div className="my-4 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
-      <div className="flex items-center justify-between bg-gray-800 px-4 py-2 text-white">
-        <span className="text-sm font-bold">{title}</span>
+    <div className="my-4 w-full min-w-40 overflow-hidden border border-gray-300 dark:border-gray-600">
+      <div className="flex items-center justify-between bg-[#2c405c] px-4 py-3 text-white shadow-md">
+        <span className="bg-[#2b384b] px-2 py-1 text-sm font-bold">
+          {title}
+        </span>
         <button
           onClick={copyToClipboard}
-          className="text-gray-300 transition-colors hover:text-white"
+          className="text-gray-200 transition-colors hover:text-white"
           title="复制代码"
         >
           <Copy size={16} />
           <span className="sr-only">复制代码</span>
           {copied && (
-            <span className="absolute right-0 top-0 rounded bg-green-500 px-2 py-1 text-xs text-white">
+            <span className="absolute right-0 top-0 bg-green-500 px-2 py-1 text-xs text-white">
               已复制!
             </span>
           )}
@@ -65,7 +67,9 @@ const PyResult = ({
       <div className="relative">
         <div className="flex overflow-x-auto">
           {showLineNumbers && renderLineNumbers()}
-          <div className="flex w-full items-center p-2">{proceesedCode}</div>
+          <div className="flex w-full items-center bg-white p-2">
+            {proceesedCode}
+          </div>
         </div>
       </div>
     </div>
