@@ -76,7 +76,7 @@ const PlantUML = ({
   const handleZoom = (delta: number) => {
     setZoomLevel(prevZoom => {
       const newZoom = prevZoom + delta * 0.1;
-      return Math.max(0.5, Math.min(5, newZoom)); // 限制缩放范围在0.5到5倍之间
+      return Math.max(0.5, Math.min(8, newZoom)); // 限制缩放范围在0.5到5倍之间
     });
   };
 
