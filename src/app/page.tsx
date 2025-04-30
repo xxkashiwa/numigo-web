@@ -16,10 +16,10 @@ const Home = () => {
     <Image
       src="/logo-icon.png"
       alt="Logo"
-      width={59}
-      height={48}
+      width={80}
+      height={60}
       priority
-      className="opacity-80 filter"
+      className="h-full w-full"
     />
   );
 
@@ -37,7 +37,7 @@ const Home = () => {
             <Welcome
               icon={logoIcon}
               title="Hello, I'm NumiGo!"
-              description="I can assist you with your queries. Please feel free to ask me anything!"
+              description="I can assist you with your queries."
               className="w-full bg-transparent text-primary"
             />
           )}

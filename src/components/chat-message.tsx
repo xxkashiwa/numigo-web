@@ -1,5 +1,6 @@
 import convertCustomTags from '@/lib/convert-custom-tags';
 import processJsonEscapes from '@/lib/process-json-escapes';
+import processWrongLatex from '@/lib/process-wrong-latex';
 import { ChatLog } from '@/store/use-conversation-store';
 import { Bubble } from '@ant-design/x';
 import MDXRenderer from './mdx-components/mdx-renderer';
@@ -16,7 +17,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
   // 1. 处理JSON字符串中的转义字符
   processedMessage = processJsonEscapes(processedMessage);
   // 2. 处理错误格式的LaTeX标记
-  // processedMessage = processWrongLatex(processedMessage);
+  processedMessage = processWrongLatex(processedMessage);
   // 3. 处理自定义标签
   if (!debug) {
     processedMessage = convertCustomTags(processedMessage);

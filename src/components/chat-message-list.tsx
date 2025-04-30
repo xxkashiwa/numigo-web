@@ -22,8 +22,8 @@ export const ChatMessageList = () => {
           <Welcome
             icon={logoIcon}
             title="Hello, I'm NumiGo!"
-            description="I can assist you with your queries. Please feel free to ask me anything!"
-            className="w-full bg-transparent"
+            description="I can assist you with your queries."
+            className="w-full bg-transparent text-primary"
           />
         </div>
       ) : (
