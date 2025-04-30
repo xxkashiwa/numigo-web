@@ -1,6 +1,5 @@
 'use client';
 import { useAuthStore } from '@/store/use-auth-store';
-import { useEffect } from 'react';
 
 export const useAuth = () => {
   const {
@@ -12,14 +11,9 @@ export const useAuth = () => {
     login,
     register,
     accessToken,
-    fetchCurrentUser,
     logout,
     clearError,
   } = useAuthStore();
-
-  useEffect(() => {
-    if (!isAuthenticated && !user) fetchCurrentUser();
-  }, [isAuthenticated, user, fetchCurrentUser]);
 
   return {
     user,

@@ -19,7 +19,7 @@ const Home = () => {
       width={80}
       height={60}
       priority
-      className="h-full w-full"
+      className="h-full max-h-48 w-full max-w-48"
     />
   );
 
