@@ -94,11 +94,57 @@ const stream = async (
         const chunk = decoder.decode(value, { stream: !done });
         buffer += chunk;
         console.log('chunk\n', chunk);
+
         // 处理可能包含多个JSON对象的情况（按行分割）
         const lines = buffer.split('\n');
+        let incompleteJson = '';
+
         for (let i = 0; i < lines.length - 1; i++) {
-          const eventData = lines[i].match(/{.*}/);
-          // console.log('eventData', eventData);
+          let line = lines[i].trim();
+
+          // 检查是否有 "data: data:" 前缀
+          const hasDataDataPrefix = line.match(/^data: data:/);
+          if (hasDataDataPrefix) {
+            // 提取 "data: data:" 后面的内容
+            line = line.substring(11);
+          }
+          // 检查是否有一般的 "data:" 前缀
+          else if (line.startsWith('data: ')) {
+            line = line.substring(6);
+          }
+
+          // 检测未闭合的 JSON
+          if (
+            line &&
+            !incompleteJson &&
+            line.includes('{') &&
+            !line.includes('}')
+          ) {
+            incompleteJson = line;
+            continue;
+          }
+
+          // 如果有未闭合的 JSON，尝试与当前行组合
+          if (incompleteJson) {
+            // 检查当前行是否也有前缀需要处理
+            if (line.match(/^data: data:/)) {
+              line = line.substring(11);
+            } else if (line.startsWith('data: ')) {
+              line = line.substring(6);
+            }
+
+            line = incompleteJson + line;
+            incompleteJson = '';
+
+            // 如果组合后仍未闭合，继续累积
+            if (line.includes('{') && !line.includes('}')) {
+              incompleteJson = line;
+              continue;
+            }
+          }
+
+          // 提取可能的 JSON 对象
+          const eventData = line.match(/{.*}/);
           if (eventData) {
             try {
               const json = JSON.parse(eventData[0]);
@@ -110,16 +156,41 @@ const stream = async (
               console.log('解析 JSON 失败:', eventData);
             }
           } else {
-            onChunk('');
+            // 非 JSON 数据处理
+            if (line && !line.match(/^\s*$/)) {
+              console.log('非 JSON 数据:', line);
+            }
           }
         }
+
+        // 保留最后一行，可能是不完整的数据
         buffer = lines[lines.length - 1];
       }
     }
 
     // 处理缓冲区中剩余的数据
     if (buffer.trim()) {
-      onChunk(buffer);
+      // 检查是否有 "data: data:" 前缀
+      if (buffer.trim().startsWith('data: data:')) {
+        buffer = buffer.trim().substring(11);
+      } else if (buffer.trim().startsWith('data: ')) {
+        buffer = buffer.trim().substring(6);
+      }
+
+      try {
+        const jsonMatch = buffer.match(/{.*}/);
+        if (jsonMatch) {
+          const json = JSON.parse(jsonMatch[0]);
+          if (json.answer && json.status !== 10) {
+            onChunk(json.answer);
+          }
+        } else {
+          onChunk(buffer);
+        }
+      } catch (error) {
+        console.log('解析剩余 JSON 失败:', buffer);
+        onChunk(buffer);
+      }
     }
 
     return { status: response.status };
