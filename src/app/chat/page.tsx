@@ -2,9 +2,18 @@
 import AppSender from '@/components/app-sender';
 import { ChatMessageList } from '@/components/chat-message-list';
 import { ScrollControls } from '@/components/scroll-controls';
+import { useAuthStore } from '@/store/use-auth-store';
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 const ChatPage = () => {
+  const router = useRouter();
+
+  const isAuthenticated = useAuthStore.getState().isAuthenticated;
+  if (!isAuthenticated) {
+    router.push('/login');
+  }
+
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   return (

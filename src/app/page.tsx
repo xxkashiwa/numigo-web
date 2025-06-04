@@ -2,13 +2,23 @@
 import AppSender from '@/components/app-sender';
 import { ChatMessageList } from '@/components/chat-message-list';
 import { useConversation } from '@/hooks/use-conversation';
+import { useAuthStore } from '@/store/use-auth-store';
 import { Welcome } from '@ant-design/x';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
+  const router = useRouter();
+
+  const isAuthenticated = useAuthStore.getState().isAuthenticated;
+  if (!isAuthenticated) {
+    router.push('/login');
+  }
+
   const { isLoading, chatLogs } = useConversation();
+
   if (chatLogs.length > 0 && !isLoading) {
-    window.location.href = '/chat';
+    router.push('/chat');
   }
 
   // Create logo icon ReactNode

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/use-auth';
+import { useAuthStore } from '@/store/use-auth-store';
 import { UserLoginData, UserRegisterData } from '@/types/user';
 import {
   EyeIcon,
@@ -17,11 +18,16 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  if (useAuthStore.getState().isAuthenticated) {
+    router.push('/');
+  }
   // Password visibility states
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const router = useRouter();
+
   // Auth hooks
   const { login, register, isLoading, error, clearError, isAuthenticated } =
     useAuth();

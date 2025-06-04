@@ -28,7 +28,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex h-full w-full overflow-hidden antialiased`}
       >

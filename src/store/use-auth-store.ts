@@ -72,12 +72,6 @@ export const useAuthStore = create<AuthState>()(
               isAuthenticated: false,
             });
           }
-
-          // 注册成功后自动登录
-          await get().login({
-            username: registerData.username,
-            password: registerData.password,
-          });
         } catch (error) {
           set({
             error: error instanceof Error ? error.message : '注册失败',
@@ -107,36 +101,6 @@ export const useAuthStore = create<AuthState>()(
           });
         }
       },
-
-      //   set({ isLoading: true });
-      //   try {
-      //     const response = await getCurrentUser();
-      //     if (response.status !== 200) {
-      //       set({
-      //         error: response.data.detail || '获取用户信息失败',
-      //         isLoading: false,
-      //         isAuthenticated: false,
-      //         user: null,
-      //         authToken: '',
-      //       });
-      //       return;
-      //     }
-
-      //     set({
-      //       user: response.data,
-      //       isAuthenticated: true,
-      //       isLoading: false,
-      //       authToken: state.authToken,
-      //     });
-      //   } catch (error) {
-      //     set({
-      //       error: error instanceof Error ? error.message : '获取用户信息失败',
-      //       isLoading: false,
-      //       isAuthenticated: false,
-      //     });
-      //   }
-      // },
-
       clearError: () => set({ error: null }),
     }),
     {

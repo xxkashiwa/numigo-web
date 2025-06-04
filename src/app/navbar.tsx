@@ -2,15 +2,15 @@
 import { NewChatButton, ToggleButton } from '@/components/buttons';
 import UserDialog from '@/components/dialogs/user-dialog';
 import { useSidebar } from '@/components/ui/sidebar';
-import { useAuth } from '@/hooks/use-auth';
 import { useConversation } from '@/hooks/use-conversation';
 import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const { open } = useSidebar();
-  const { isAuthenticated } = useAuth();
+
   const {} = useConversation();
   const router = useRouter();
+  const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
   return (
     <div className="sticky flex w-full items-center justify-between border-b border-primary/20 bg-background">
@@ -41,32 +41,6 @@ const Navbar = () => {
 };
 export default Navbar;
 
-// const ChatTitle = () => {
-//   const { chatTitle } = useConversation();
-//   const [title, setTitle] = useState(chatTitle);
-
-//   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-//     if (e.key === 'Enter') {
-//       e.preventDefault();
-//       e.currentTarget.blur();
-//     }
-//   };
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setTitle(e.target.value);
-//   };
-
-//   return (
-//     <input
-//       placeholder="未命名对话"
-//       value={title}
-//       onChange={handleChange}
-//       onKeyDown={handleKeyDown}
-//       className="border-none outline-none"
-//     />
-//   );
-// };
-
 import {
   Select,
   SelectContent,
@@ -75,6 +49,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useAuthStore } from '@/store/use-auth-store';
 import { useModelStore } from '@/store/use-model-store';
 import { Brain, FlaskConical, Lightbulb, Settings } from 'lucide-react';
 

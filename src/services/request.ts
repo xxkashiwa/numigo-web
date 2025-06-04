@@ -26,14 +26,12 @@ export default (config: AxiosRequestConfig) => {
   );
   instance.interceptors.response.use(
     response => {
-      useAuthStore.setState({ isLoading: !useAuthStore.getState().isLoading });
-      if (response.status === 401) {
-        console.error('unauthorized ', response.data);
-      }
       return response;
     },
     error => {
-      useAuthStore.setState({ isLoading: !useAuthStore.getState().isLoading });
+      if (error.status === 401) {
+        useAuthStore.getState().logout();
+      }
       return Promise.reject(error);
     }
   );
