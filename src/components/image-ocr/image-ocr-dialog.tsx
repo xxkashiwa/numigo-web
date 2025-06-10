@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { postImageToOCR } from '@/services/ocr-service';
+import { ocrService } from '@/services/ocr-service';
 import React, { useRef, useState } from 'react';
 
 interface ImageOCRDialogProps {
@@ -38,8 +38,8 @@ export const ImageOCRDialog: React.FC<ImageOCRDialogProps> = ({
 
       // Convert the image to base64
       const base64 = await convertImageToBase64(file); // Send the base64 image to the OCR service
-      const response = await postImageToOCR(base64);
-      //   // Check if response has recognized text
+      const response = await ocrService(base64);
+      // //   // Check if response has recognized text
       if (response) {
         // Pass the recognized text back to the parent component
         onSuccess(response);
