@@ -1,40 +1,139 @@
+import { Button } from '@/components/ui/button';
 import { useConversation } from '@/hooks/use-conversation';
-
 import { Sender } from '@ant-design/x';
-import { useState } from 'react';
+import { ImageIcon, Keyboard } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { ImageOCRDialog } from './image-ocr/image-ocr-dialog';
+import { useImageOCR } from './image-ocr/use-image-ocr';
+import { MathKeyboard, useCursorPosition } from './math-keyboard';
+import './math-keyboard.css';
 
+/**
+ * AppSender Component
+ *
+ * Renders the input area with math keyboard functionality
+ */
 const AppSender = () => {
+  // State and hook initialization
   const [inputText, setInputText] = useState('');
+  const [showMathKeyboard, setShowMathKeyboard] = useState(false);
   const { isLoading, sendMessage } = useConversation();
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const { isDialogOpen, openDialog, closeDialog } = useImageOCR();
+
+  // Use the cursor position hook to track cursor position in textarea
+  const { cursorPos, setCursorPos, textAreaHandler } =
+    useCursorPosition(textareaRef);
+
+  /**
+   * Handle message submission
+   */
   const handleSendMessage = async () => {
     if (!inputText.trim() || isLoading) return;
 
-    // 清空输入框
+    // Clear input and send message
     setInputText('');
     await sendMessage(inputText);
+
+    // Redirect to chat page if not already there
     if (!window.location.pathname.includes('/chat')) {
       window.location.href = '/chat';
     }
 
-    // 重置输入框高度
-    const textarea = document.querySelector('textarea');
+    // Reset textarea height
+    const textarea = textAreaHandler.findTextarea();
     if (textarea) {
       textarea.style.height = 'auto';
     }
   };
+  /**
+   * Toggle the math keyboard visibility
+   */
+  const toggleMathKeyboard = () => {
+    setShowMathKeyboard(!showMathKeyboard);
+  };
 
+  /**
+   * Handle OCR result text
+   */
+  const handleOCRSuccess = (text: string) => {
+    // Insert the OCR text into the input at the cursor position
+    if (textAreaHandler && typeof text === 'string') {
+      const newText =
+        inputText.substring(0, cursorPos) +
+        text +
+        inputText.substring(cursorPos);
+
+      setInputText(newText);
+      // Update cursor position to be after the inserted text
+      setTimeout(() => {
+        setCursorPos(cursorPos + text.length);
+      }, 0);
+    }
+  };
   return (
-    <>
-      <Sender
-        loading={isLoading}
-        value={inputText}
-        onChange={v => {
-          setInputText(v);
-        }}
-        onSubmit={handleSendMessage}
-        autoSize={{ minRows: 2, maxRows: 6 }}
+    <div className="relative">
+      {/* Math keyboard component (only shown when toggled) */}
+      {showMathKeyboard && (
+        <MathKeyboard
+          inputText={inputText}
+          onClose={toggleMathKeyboard}
+          textAreaHandler={textAreaHandler}
+          cursorPos={cursorPos}
+          setInputText={setInputText}
+          setCursorPos={setCursorPos}
+        />
+      )}
+
+      {/* Image OCR Dialog */}
+      <ImageOCRDialog
+        isOpen={isDialogOpen}
+        onClose={closeDialog}
+        onSuccess={handleOCRSuccess}
       />
-    </>
+
+      <div className="flex flex-col">
+        {/* Message input area */}
+        <Sender
+          loading={isLoading}
+          value={inputText}
+          onChange={v => {
+            setInputText(v);
+          }}
+          onSubmit={handleSendMessage}
+          autoSize={{ minRows: 2, maxRows: 6 }}
+        />
+
+        {/* Toolbar with buttons */}
+        <div className="mt-2 flex justify-end space-x-2">
+          {' '}
+          {/* Image OCR button */}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={openDialog}
+            title="图片识别"
+            className="flex items-center gap-1"
+          >
+            <ImageIcon className="h-4 w-4" />
+            <span>图片识别</span>
+          </Button>
+          {/* Math keyboard toggle button */}
+          <Button
+            type="button"
+            variant={showMathKeyboard ? 'default' : 'outline'}
+            size="sm"
+            onClick={toggleMathKeyboard}
+            title={showMathKeyboard ? '关闭数学键盘' : '打开数学键盘'}
+            className="flex items-center gap-1"
+          >
+            <Keyboard className="h-4 w-4" />
+            <span>数学键盘</span>
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
