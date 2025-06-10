@@ -52,22 +52,26 @@ const AppSender = () => {
   const toggleMathKeyboard = () => {
     setShowMathKeyboard(!showMathKeyboard);
   };
-
   /**
    * Handle OCR result text
    */
   const handleOCRSuccess = (text: string) => {
     // Insert the OCR text into the input at the cursor position
     if (textAreaHandler && typeof text === 'string') {
+      const currentPos = cursorPos?.start ?? 0;
       const newText =
-        inputText.substring(0, cursorPos) +
+        inputText.substring(0, currentPos) +
         text +
-        inputText.substring(cursorPos);
+        inputText.substring(currentPos);
 
       setInputText(newText);
       // Update cursor position to be after the inserted text
+      const newCursorPos = currentPos + text.length;
       setTimeout(() => {
-        setCursorPos(cursorPos + text.length);
+        setCursorPos({
+          start: newCursorPos,
+          end: newCursorPos,
+        });
       }, 0);
     }
   };
