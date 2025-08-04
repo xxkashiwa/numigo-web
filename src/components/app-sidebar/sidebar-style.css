@@ -1,0 +1,23 @@
+.conversation-list {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+/* Ensure scrollbar styling works specifically for this component */
+.conversation-list::-webkit-scrollbar {
+  width: 4px;
+  background-color: transparent;
+}
+
+.conversation-list::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.conversation-list::-webkit-scrollbar-thumb {
+  background-color: rgba(2, 115, 255, 0.5);
+  border-radius: 10px;
+}
+
+.conversation-list::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(2, 115, 255, 0.8);
+}

@@ -46,12 +46,11 @@ export function AppSidebar() {
         <div className="flex flex-col gap-2">
           <div className="flex w-full items-center justify-start">
             <Image
-              src="/logo-title.png"
+              src="/hero-pic.png"
               alt="logo-title"
               width={1000}
-              height={70}
+              height={1000}
               priority
-              className="w-2/3"
             />
           </div>
 
@@ -60,27 +59,29 @@ export function AppSidebar() {
             <NewChatButton />
           </div>
           <Separator />
-          <p className="text-sm text-muted-foreground">All conversations</p>
+          <p className="text-sm text-muted-foreground">历史对记录</p>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <Conversations
-            items={conversations.map(item => ({
-              key: 'index' + item.id,
-              label: item.title,
-            }))}
-            key={conversations.length + 'conversations'}
-            onActiveChange={(value: string) => {
-              const id = Number(value.split('index')[1]);
-              if (id) {
-                setCurrentConversationId(id);
-                if (!window.location.pathname.includes('/chat')) {
-                  window.location.href = '/chat';
+          <div className="conversation-list">
+            <Conversations
+              items={conversations.map(item => ({
+                key: 'index' + item.id,
+                label: item.title,
+              }))}
+              key={conversations.length + 'conversations'}
+              onActiveChange={(value: string) => {
+                const id = Number(value.split('index')[1]);
+                if (id) {
+                  setCurrentConversationId(id);
+                  if (!window.location.pathname.includes('/chat')) {
+                    window.location.href = '/chat';
+                  }
                 }
-              }
-            }}
-          />
+              }}
+            />
+          </div>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />

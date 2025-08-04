@@ -108,17 +108,34 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-background p-4">
       <div className="w-full max-w-md">
-        <h1 className="mb-6 text-center text-3xl font-bold text-black">
+        <h1
+          className="mb-6 text-center text-3xl font-bold text-black"
+          style={{
+            color: 'rgba(2, 115, 255, 1)',
+          }}
+        >
           登录和注册
         </h1>
 
-        <div className="rounded-lg border border-border bg-card p-6 shadow-lg">
+        <div className="rounded-lg border border-border p-6 shadow-lg">
           <Tabs defaultValue="login" className="w-full">
-            <TabsList className="mb-6 grid w-full grid-cols-2">
-              <TabsTrigger value="login" className="text-black">
+            <TabsList className="mb-6 grid w-full grid-cols-2 bg-inherit">
+              <TabsTrigger
+                value="login"
+                className="mx-2 text-gray-500 data-[state=active]:text-white"
+                style={{
+                  background: 'rgba(2, 115, 255, 0.8)',
+                }}
+              >
                 登录
               </TabsTrigger>
-              <TabsTrigger value="register" className="text-black">
+              <TabsTrigger
+                value="register"
+                className="mx-2 text-gray-500 data-[state=active]:text-white"
+                style={{
+                  background: 'rgba(2, 115, 255, 0.8)',
+                }}
+              >
                 注册
               </TabsTrigger>
             </TabsList>
@@ -168,7 +185,10 @@ export default function LoginPage() {
               )}
 
               <Button
-                className="w-full bg-primary text-black hover:bg-primary/90"
+                className="w-full hover:bg-primary/90"
+                style={{
+                  background: 'rgba(246, 205, 75, 1)',
+                }}
                 onClick={handleLogin}
                 disabled={isLoading}
               >
@@ -257,7 +277,10 @@ export default function LoginPage() {
               )}
 
               <Button
-                className="w-full bg-primary text-black hover:bg-primary/90"
+                className="w-full hover:bg-primary/90"
+                style={{
+                  background: 'rgba(246, 205, 75, 1)',
+                }}
                 onClick={handleRegister}
                 disabled={isLoading}
               >

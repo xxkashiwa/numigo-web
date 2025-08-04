@@ -75,7 +75,7 @@ export const ImageOCRDialog: React.FC<ImageOCRDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="bg-white sm:max-w-md">
         <DialogHeader>
           <DialogTitle>图片识别</DialogTitle>
         </DialogHeader>
@@ -85,6 +85,9 @@ export const ImageOCRDialog: React.FC<ImageOCRDialogProps> = ({
           </div>
 
           <Button
+            style={{
+              background: 'rgba(246, 205, 75, 1)',
+            }}
             onClick={handleSelectImage}
             variant="outline"
             className="w-full"

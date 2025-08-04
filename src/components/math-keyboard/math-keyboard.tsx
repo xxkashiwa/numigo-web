@@ -52,7 +52,7 @@ const MathKeyboard = ({
           <Button
             key={index}
             variant="outline"
-            className="h-10 w-10 text-base font-medium"
+            className="navi-item h-10 w-10 text-base font-medium"
             onClick={() => {
               if (item.symbol === '$') {
                 wrapSelectedInMath();
@@ -74,15 +74,47 @@ const MathKeyboard = ({
       <CardContent className="p-4">
         <Tabs defaultValue="basic" className="w-full">
           <div className="mb-4 flex items-center justify-between">
-            <TabsList>
-              <TabsTrigger value="basic">基础运算</TabsTrigger>
-              <TabsTrigger value="sets">集合</TabsTrigger>
-              <TabsTrigger value="logic">逻辑</TabsTrigger>
-              <TabsTrigger value="calculus">微积分</TabsTrigger>
+            <TabsList className="bg-inherit">
+              <TabsTrigger
+                value="basic"
+                className="mx-2 text-gray-200 data-[state=active]:text-white"
+                style={{
+                  background: 'rgba(2, 115, 255, 0.8)',
+                }}
+              >
+                基础运算
+              </TabsTrigger>
+              <TabsTrigger
+                value="sets"
+                className="mx-2 text-gray-200 data-[state=active]:text-white"
+                style={{
+                  background: 'rgba(2, 115, 255, 0.8)',
+                }}
+              >
+                集合
+              </TabsTrigger>
+              <TabsTrigger
+                value="logic"
+                className="mx-2 text-gray-200 data-[state=active]:text-white"
+                style={{
+                  background: 'rgba(2, 115, 255, 0.8)',
+                }}
+              >
+                逻辑
+              </TabsTrigger>
+              <TabsTrigger
+                value="calculus"
+                className="mx-2 text-gray-200 data-[state=active]:text-white"
+                style={{
+                  background: 'rgba(2, 115, 255, 0.8)',
+                }}
+              >
+                微积分
+              </TabsTrigger>
             </TabsList>
             <Button
               variant="outline"
-              className="text-sm"
+              className="navi-item text-sm"
               onClick={onClose}
               title="关闭键盘"
             >
@@ -105,7 +137,7 @@ const MathKeyboard = ({
           <div className="mt-4 flex items-center justify-between">
             <Button
               variant="outline"
-              className="text-sm"
+              className="navi-item text-sm"
               onClick={() => insertMathSymbol('$$\n\n$$')}
               title="插入行间公式"
             >
@@ -113,7 +145,7 @@ const MathKeyboard = ({
             </Button>
             <Button
               variant="outline"
-              className="text-sm"
+              className="navi-item text-sm"
               onClick={() => wrapSelectedInMath()}
               title="将选中文本转为行内公式"
             >

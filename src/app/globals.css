@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(2, 115, 255, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(2, 115, 255, 0.8);
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px; /* 设置基础字体大小 */
@@ -13,7 +32,11 @@ body {
     font-size: 18px; /* 从默认的16px增加到18px */
   }
   :root {
-    --background: 43 47% 94%; /* Beige background */
+    background: linear-gradient(
+      180deg,
+      rgba(239, 239, 239, 0.2) 78%,
+      rgba(2, 115, 255, 0.2) 100%
+    );
     --foreground: 240 10% 3.9%;
     --card: 43 47% 94%;
     --card-foreground: 240 10% 3.9%;
@@ -36,9 +59,7 @@ body {
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 43 47% 94%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 195 65% 75%;
     --sidebar-primary-foreground: 240 10% 3.9%;
@@ -46,40 +67,6 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 195 30% 85%;
     --sidebar-ring: 195 65% 75%;
-  }
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -99,4 +86,10 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.navi-item {
+  @apply flex items-center justify-center rounded-lg p-2 text-white transition-all duration-300;
+  background: rgba(2, 115, 255, 0.8);
+  box-shadow: 0px 4px 2px 0px rgba(2, 115, 255, 0.3);
 }

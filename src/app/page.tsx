@@ -1,10 +1,9 @@
 'use client';
 import AppSender from '@/components/app-sender';
 import { ChatMessageList } from '@/components/chat-message-list';
+import HelloNumigo from '@/components/hello-numigo';
 import { useConversation } from '@/hooks/use-conversation';
 import { useAuthStore } from '@/store/use-auth-store';
-import { Welcome } from '@ant-design/x';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const Home = () => {
@@ -21,18 +20,6 @@ const Home = () => {
     router.push('/chat');
   }
 
-  // Create logo icon ReactNode
-  const logoIcon = (
-    <Image
-      src="/logo-icon.png"
-      alt="Logo"
-      width={80}
-      height={60}
-      priority
-      className="h-full max-h-48 w-full max-w-48"
-    />
-  );
-
   return (
     <div className="flex h-[90vh] w-full bg-background">
       <div className="flex h-full w-full items-center justify-center">
@@ -44,12 +31,7 @@ const Home = () => {
               </div>
             </div>
           ) : (
-            <Welcome
-              icon={logoIcon}
-              title="Hello, I'm NumiGo!"
-              description="I can assist you with your queries."
-              className="w-full bg-transparent text-primary"
-            />
+            <HelloNumigo />
           )}
 
           <div className="w-full">

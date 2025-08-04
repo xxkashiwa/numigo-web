@@ -108,29 +108,25 @@ const AppSender = () => {
           autoSize={{ minRows: 2, maxRows: 6 }}
         />
 
-        {/* Toolbar with buttons */}
-        <div className="mt-2 flex justify-end space-x-2">
-          {' '}
-          {/* Image OCR button */}
+        <div className="mt-2 flex justify-start space-x-2">
           <Button
             type="button"
             variant="outline"
             size="sm"
             onClick={openDialog}
             title="图片识别"
-            className="flex items-center gap-1"
+            className="navi-item flex items-center gap-1"
           >
             <ImageIcon className="h-4 w-4" />
             <span>图片识别</span>
           </Button>
-          {/* Math keyboard toggle button */}
           <Button
             type="button"
             variant={showMathKeyboard ? 'default' : 'outline'}
             size="sm"
             onClick={toggleMathKeyboard}
             title={showMathKeyboard ? '关闭数学键盘' : '打开数学键盘'}
-            className="flex items-center gap-1"
+            className="navi-item flex items-center gap-1"
           >
             <Keyboard className="h-4 w-4" />
             <span>数学键盘</span>
