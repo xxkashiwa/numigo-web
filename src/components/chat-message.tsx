@@ -4,6 +4,7 @@ import processWrongLatex from '@/lib/process-wrong-latex';
 import { ChatLog } from '@/store/use-conversation-store';
 import { Bubble } from '@ant-design/x';
 import MDXRenderer from './mdx-components/mdx-renderer';
+import { MessageFeedback } from './message-feedback';
 interface ChatMessageProps {
   message: ChatLog;
 }
@@ -32,6 +33,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
             content={processedMessage}
             typing={{ step: 2, interval: 10 }}
             className="rounded-none"
+            variant="shadow"
             messageRender={(content: string) => (
               <MDXRenderer message={content} />
             )}
@@ -43,18 +45,31 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
         ) : debug ? (
           processedMessage
         ) : (
-          <Bubble
-            content={processedMessage}
-            messageRender={(content: string) => (
-              <MDXRenderer message={content} />
-            )}
-            variant="shadow"
-            className={`${
-              isUser
-                ? 'bg-[#f0e6d2] text-[#4a3f35]' // Slightly darker beige for user with brown text
-                : 'text-[#2c405c]' // Light blue for AI with navy text
-            } rounded-none`}
-          />
+          <>
+            <div className="group">
+              <Bubble
+                content={processedMessage}
+                messageRender={(content: string) => (
+                  <MDXRenderer message={content} />
+                )}
+                variant="shadow"
+              />
+
+              {!isUser && (
+                <MessageFeedback
+                  messageId={`msg_${message.message.substring(0, 20).replace(/\s+/g, '_')}`}
+                  onFeedback={(id, type) => {
+                    console.log(`Message ${id} received feedback: ${type}`);
+                    // Here you would call an API to save feedback
+                  }}
+                  onSimilarAnswer={id => {
+                    console.log(`Similar answers requested for message ${id}`);
+                    // Here you would trigger the similar answers functionality
+                  }}
+                />
+              )}
+            </div>
+          </>
         )}
       </div>
     </div>

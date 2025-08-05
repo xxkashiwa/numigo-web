@@ -93,3 +93,7 @@ body {
   background: rgba(2, 115, 255, 0.8);
   box-shadow: 0px 4px 2px 0px rgba(2, 115, 255, 0.3);
 }
+
+.bg-custom-component {
+   background: rgba(2, 115, 255, 0.7);
+}

@@ -63,16 +63,14 @@ const PlantUML = ({
 
   return (
     <div className="my-4 w-full overflow-hidden border border-gray-300 dark:border-gray-600">
-      <div className="flex items-center justify-between bg-[#2c405c] px-4 py-3 text-white shadow-md">
-        <span className="bg-[#2b384b] px-2 py-1 text-sm font-bold">
-          {title}
-        </span>
+      <div className="bg-custom-component flex items-center justify-between px-4 py-3 text-white shadow-md">
+        <span className="px-2 py-1 text-sm font-bold">{title}</span>
         <div className="flex space-x-2">
           <button
             onClick={toggleShowCode}
             className="text-gray-200 transition-colors hover:text-white"
             title={showCode ? '隐藏代码' : '显示代码'}
-          >
+          > 
             {showCode ? '隐藏代码' : '显示代码'}
           </button>
           <button

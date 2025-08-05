@@ -47,8 +47,8 @@ const Python = ({
 
   return (
     <div className="my-4 w-full overflow-hidden border border-gray-300 dark:border-gray-600">
-      <div className="flex items-center justify-between bg-[#2c405c] px-4 py-3 text-white shadow-md">
-        <span className="bg-[#2b384b] px-2 py-1 text-sm font-bold">
+      <div className="flex items-center justify-between bg-custom-component px-4 py-3 text-white shadow-md">
+        <span className="px-2 py-1 text-sm font-bold">
           {title}
         </span>
         <button
