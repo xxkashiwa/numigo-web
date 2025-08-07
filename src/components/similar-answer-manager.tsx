@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { Pencil, Plus, Trash, X } from 'lucide-react';

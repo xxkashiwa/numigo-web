@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import processJsonEscapes from '@/lib/process-json-escapes';
@@ -70,7 +69,7 @@ const PlantUML = ({
             onClick={toggleShowCode}
             className="text-gray-200 transition-colors hover:text-white"
             title={showCode ? '隐藏代码' : '显示代码'}
-          > 
+          >
             {showCode ? '隐藏代码' : '显示代码'}
           </button>
           <button
