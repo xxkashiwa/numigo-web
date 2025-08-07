@@ -10,7 +10,7 @@ const HelloNumigo = () => {
             color: 'rgba(2, 115, 255, 1)',
           }}
         >
-          你好呀！我是Numigo！
+          你好呀！我是numiGo！
         </p>
         <p
           style={{
